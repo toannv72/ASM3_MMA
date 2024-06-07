@@ -3,14 +3,14 @@ import { ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import { LanguageContext } from "../../../contexts/LanguageContext";
 import ComSelectButton from "../../../Components/ComButton/ComSelectButton";
-import ComNew from "./ComNew";
-import { getData } from "./../../../api/api";
+import ComProduct from "./ComProduct";
+import { getData } from "../../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
 import ComLoading from "../../../Components/ComLoading/ComLoading";
 import { useStorage } from "../../../hooks/useLocalStorage";
 import TopicContent from "../../Home/TopicContent";
 
-export default function News() {
+export default function Products({ deletes }) {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(true);
   const {
@@ -36,6 +36,9 @@ export default function News() {
     return;
   };
 
+  useEffect(() => {
+    setLike([]);
+  }, [deletes]);
   return (
     <View style={styles?.body}>
       <ScrollView
@@ -45,9 +48,9 @@ export default function News() {
       ></ScrollView>
       <ComLoading show={show}>
         {like.map((value, index) => (
-          <ComNew
+          <ComProduct
             id={value?.id}
-            key={index}
+            key={value?.id}
             value={value}
             url={value.image}
             name={value.perfumeName}
@@ -55,7 +58,7 @@ export default function News() {
             handleLike={handleLike}
           >
             {value.perfumeDescription}
-          </ComNew>
+          </ComProduct>
         ))}
       </ComLoading>
     </View>

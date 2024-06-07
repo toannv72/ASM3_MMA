@@ -7,14 +7,7 @@ import editIcon1 from "../../../../assets/iconLike/Favorite.png";
 import { useStorage } from "../../../hooks/useLocalStorage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-export default function ComNew({
-  url,
-  children,
-  value,
-  name,
-  handleLike,
-  handleUnlike,
-}) {
+export default function ComProduct({ url, children, value, name, handleLike, handleUnlike }) {
   const [check, setCheck] = useState(null);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
   const hasId = (id, array) => array.some((item) => item.id === id);
