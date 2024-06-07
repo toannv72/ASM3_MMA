@@ -13,12 +13,18 @@ import ComDatePicker from "../../../Components/ComInput/ComDatePicker";
 import { ScrollView } from "react-native";
 import { firebaseImg } from "../../../api/firebaseImg";
 import ComHeader from "../../../Components/ComHeader/ComHeader";
+import ComTextArea from "../../../Components/ComInput/ComTextArea";
+import { postData } from "../../../api/api";
+import ComPopup from "../../../Components/ComPopup/ComPopup";
+import { useModalState } from "../../../hooks/useModalState";
 
 export default function EditProfile() {
   const [date, setDate] = useState(new Date());
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState("null");
   const navigation = useNavigation();
+  const modal = useModalState();
+
   const {
     text: {
       EditProfile,
@@ -27,49 +33,34 @@ export default function EditProfile() {
     setLanguage,
   } = useContext(LanguageContext);
   const loginSchema = yup.object().shape({
-    fullName: yup.string().trim().required(EditProfile?.message?.fullName),
+    perfumeName: yup.string().trim().required(EditProfile?.message?.fullName),
     gender: yup.string().trim().required(EditProfile?.message?.gender),
-    dateOfBirth: yup
-      .string()
-      .trim()
-      .required(EditProfile?.message?.dateOfBirth),
-    phoneNumber: yup
-      .string()
-      .trim()
-      .required(EditProfile?.message?.phoneNumber),
-    email: yup
-      .string()
-      .email(EditProfile?.message?.emailInvalid)
-      .trim()
-      .required(EditProfile?.message?.email),
-    idNumber: yup.string().trim().required(EditProfile?.message?.idNumber),
-    address: yup.string().trim().required(EditProfile?.message?.address),
+
+    price: yup.string().trim().required("Vui lòng nhập giá tiền"),
+    company: yup.string().trim().required("Vui lòng nhập company"),
+    perfumeDescription: yup.string().trim().required("vui lòng nhập"),
   });
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
-      email: "toan@gmail.com",
-      dateOfBirth: date,
+      gender: true,
     },
   });
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset
   } = methods;
-  const handleEdit = (data) => {
-    firebaseImg(image).then((imageUrl) => {
-      console.log("Image uploaded successfully:", imageUrl);
-    });
-  };
+
   const data = [
     {
-      value: "1",
+      value: false,
       label: "Nam",
     },
     {
-      value: "2",
+      value: true,
       label: "Nữ",
     },
   ];
@@ -77,13 +68,41 @@ export default function EditProfile() {
   const setImg = (data) => {
     setImage(data);
   };
+  const handleCreate = (data) => {
+    console.log("====================================");
+    console.log(1232, data);
+    console.log("====================================");
+    firebaseImg(image).then((imageUrl) => {
+      console.log("Image uploaded successfully:", imageUrl);
+      postData("/data", { ...data, image: imageUrl })
+        .then((e) => {
+          console.log(e);
+          modal.handleOpen();
+          reset()
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  };
   return (
     <>
-      <ComHeader
-        title={EditProfile?.title}
-        showTitle
-        showBackIcon
-      />
+      <ComHeader title={EditProfile?.title} showTitle showBackIcon />
+
+      <ComPopup
+        visible={modal.isModalOpen}
+        title="Tạo thành công"
+        buttons={[
+          // { text: "Hủy", onPress: modal.handleClose, check: true },
+          {
+            text: "Xác nhận",
+            onPress: () => {
+              modal.handleClose();
+            },
+          },
+        ]}
+        onClose={modal.handleClose}
+      ></ComPopup>
       <View style={styles.body}>
         <View style={styles.container}>
           <FormProvider {...methods}>
@@ -97,7 +116,7 @@ export default function EditProfile() {
                   <ComInput
                     label={EditProfile?.label?.fullName}
                     placeholder={EditProfile?.placeholder?.fullName}
-                    name="fullName"
+                    name="perfumeName"
                     control={control}
                     keyboardType="default" // Set keyboardType for First Name input
                     errors={errors} // Pass errors object
@@ -122,59 +141,45 @@ export default function EditProfile() {
                       />
                     </View>
                     <View style={{ flex: 1 }}>
-                      <ComDatePicker
-                        label={EditProfile?.label?.dateOfBirth}
-                        placeholder={EditProfile?.placeholder?.dateOfBirth}
-                        name="dateOfBirth"
+                      <ComInput
+                        label={"Giá tiền"}
+                        placeholder={"nhập giá tiền"}
+                        name="price"
                         control={control}
+                        keyboardType="number-pad" // Set keyboardType for First Name input
                         errors={errors} // Pass errors object
                         required
                       />
                     </View>
                   </View>
+
                   <ComInput
-                    label={EditProfile?.label?.phoneNumber}
-                    placeholder={EditProfile?.placeholder?.phoneNumber}
-                    name="phoneNumber"
+                    label={"Công ty"}
+                    placeholder={"company"}
+                    name="company"
                     control={control}
                     keyboardType="default" // Set keyboardType for First Name input
                     errors={errors} // Pass errors object
                     required
                   />
-                  <ComInput
-                    label={EditProfile?.label?.email}
-                    placeholder={EditProfile?.placeholder?.email}
-                    name="email"
+
+                  <ComTextArea
+                    label={"chi tiết sản phẩm"}
+                    placeholder={"chi tiết sản phẩm"}
+                    name="perfumeDescription"
                     control={control}
-                    keyboardType="default" // Set keyboardType for First Name input
-                    errors={errors} // Pass errors object
+                    errors={errors}
                     required
                   />
-                  <ComInput
-                    label={EditProfile?.label?.idNumber}
-                    placeholder={EditProfile?.placeholder?.idNumber}
-                    name="idNumber"
-                    control={control}
-                    errors={errors} // Pass errors object
-                    required
-                  />
-                  <ComInput
-                    label={EditProfile?.label?.address}
-                    placeholder={EditProfile?.placeholder?.address}
-                    name="address"
-                    control={control}
-                    errors={errors} // Pass errors object
-                    required
-                  />
+
+                  <ComButton onPress={handleSubmit(handleCreate)}>
+                    Tạo mới
+                  </ComButton>
                 </View>
-                <View style={{ height: 100 }}></View>
+                <View style={{ height: 150 }}></View>
               </ScrollView>
             </View>
-            <View>
-              <ComButton onPress={handleSubmit(handleEdit)}>
-                {EditProfile?.button?.EditProfile}
-              </ComButton>
-            </View>
+            <View></View>
           </FormProvider>
         </View>
       </View>

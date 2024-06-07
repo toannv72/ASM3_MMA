@@ -8,9 +8,8 @@ import { getData } from "../../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
 import ComLoading from "../../../Components/ComLoading/ComLoading";
 import { useStorage } from "../../../hooks/useLocalStorage";
-import TopicContent from "../../Home/TopicContent";
 
-export default function Products({ deletes }) {
+export default function Products({ deletes, call }) {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(true);
   const {
@@ -33,11 +32,12 @@ export default function Products({ deletes }) {
   };
   const handleUnlike = (value) => {
     setLike(like.filter((item) => item.id !== value.id));
+    call();
     return;
   };
 
   useEffect(() => {
-    setLike([]);
+    loadStoredValue();
   }, [deletes]);
   return (
     <View style={styles?.body}>
