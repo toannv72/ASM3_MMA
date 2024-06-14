@@ -11,9 +11,6 @@ import Otp from "./src/page/Otp/Otp";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
 import ServicePackages from "./src/page/ServicePackages/ServicePackages";
 import HealthMonitor from "./src/page/HealthMonitor/HealthMonitor";
-import Notification from "./src/page/Notification/Notification";
-import HealthMonitorDetail from "./src/page/HealthMonitorDetail/HealthMonitorDetail";
-import VisitationSchedule from "./src/page/VisitationSchedule/VisitationSchedule";
 import AddingServicePackages from "./src/page/AddingServicePackage/AddingServicePackage";
 import AddingServiceDetail from "./src/page/AddingServiceDetail/AddingServiceDetail";
 import AddingServiceElderRegister from "./src/page/AddingServiceRegister/AddingServiceElderRegister";
@@ -21,39 +18,48 @@ import AddingServiceCalendarRegister from "./src/page/AddingServiceRegister/Addi
 import ServicePayment from "./src/page/ServicePayment/ServicePayment";
 import ServiceHistory from "./src/page/ServiceHistory/ServiceHistory/ServiceHistory";
 import ServiceHistoryDetail from "./src/page/ServiceHistory/ServiceHistoryDetail/ServiceHistoryDetail";
-import CancelRenewSuccess from "./src/page/ServiceHistory/ServiceHistoryDetail/CancelRenewSuccess";
-import CreateFeedback from "./src/page/Feedback/CreateFeedback";
-import FeedbackHistory from "./src/page/Feedback/FeedbackHistory";
-import FeedbackDetail from "./src/page/Feedback/FeedbackDetail";
 import BillHistory from "./src/page/Bills/BillHistory";
 import BillDetail from "./src/page/Bills/BillDetail";
 import UserProfile from "./src/page/UserProfile/UserProfile";
-import ElderProfile from "./src/page/ElderProfile/ElderProfile";
 import EditProfile from "./src/page/UserProfile/EditProfile/EditProfile";
-import DetailProfile from "./src/page/UserProfile/DetailProfile";
 import ForgetPassword from "./src/page/ForgetPassword/ForgetPassword";
 import OtpForgetPassword from "./src/page/ForgetPassword/OtpForgetPassword";
 import ResetPassword from "./src/page/ForgetPassword/ResetPassword";
 import ResetPasswordSuccess from "./src/page/ForgetPassword/ResetPasswordSuccess";
-import ChangePassword from "./src/page/ChangePassword/ChangePassword";
 import ChangePasswordSuccess from "./src/page/ChangePassword/ChangePasswordSuccess";
-import RegisterVisitation from "./src/page/RegisterVisitation/RegisterVisitation";
-import RegisterVisitationSuccess from "./src/page/RegisterVisitation/RegisterVisitationSuccess";
-import Contracts from "./src/page/Contract/Contracts";
-import ContractDetail from "./src/page/ContractDetail/ContractDetail";
-import ContractCandSuccess from "./src/page/ContractDetail/ContractCandSuccess";
+import Toast from "react-native-toast-message";
 import Like from "./src/page/Like/Like";
+import Payment from "./src/page/Pay/Payment";
+import DetailOrder2 from './src/page/Pay/DetailOrder2';
+import DetailOrder from "./src/page/Pay/DetailOrder";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
+      <Toast />
       <Stack.Navigator initialRouteName="Homes">
         <Stack.Screen
           name="Homes"
           options={{ headerLeft: null, headerShown: false }}
           component={MyBottomNavigationBar}
+        />
+        <Stack.Screen
+          name="Details"
+          options={{ headerShown: false }}
+          component={ServiceHistoryDetail}
+        />
+        <Stack.Screen
+          name="Payment"
+          options={{ headerShown: false }}
+          component={Payment}
+        />
+        <Stack.Screen name="Bill" component={DetailOrder} />
+        <Stack.Screen
+          options={{ headerLeft: null, headerShown: false }}
+          name="Bill2"
+          component={DetailOrder2}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
@@ -142,21 +148,6 @@ const Routes = () => {
           name="ResetPasswordSuccess"
           component={ResetPasswordSuccess}
         />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="Contracts"
-          component={Contracts}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ContractDetail"
-          component={ContractDetail}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ContractCandSuccess"
-          component={ContractCandSuccess}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -170,32 +161,10 @@ function HomeStackScreen() {
         name="Homess"
         component={Home}
       />
-      <HomeStack.Screen
-        name="Details"
-        options={{ headerShown: false }}
-        component={ServiceHistoryDetail}
-      />
     </HomeStack.Navigator>
   );
 }
 
-const LikePage = createNativeStackNavigator();
-function LikePageScreen() {
-  return (
-    <LikePage.Navigator>
-      <LikePage.Screen
-        options={{ headerShown: false }}
-        name="Homess"
-        component={Like}
-      />
-      <LikePage.Screen
-        name="Details"
-        options={{ headerShown: false }}
-        component={ServiceHistoryDetail}
-      />
-    </LikePage.Navigator>
-  );
-}
 function MyBottomNavigationBar() {
   return (
     <Tab.Navigator
@@ -248,13 +217,14 @@ function MyBottomNavigationBar() {
       <Tab.Screen
         name="Visitation"
         options={{ headerShown: false }}
-        component={LikePageScreen}
+        component={Like}
       />
       <Tab.Screen
         name="HealthCondition"
         options={{ headerShown: false }}
         component={HealthMonitor}
       />
+   
       <Tab.Screen
         name="Notification"
         options={{ headerShown: false }}

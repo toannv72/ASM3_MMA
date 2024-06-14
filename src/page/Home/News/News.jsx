@@ -32,10 +32,23 @@ export default function News() {
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
-      getData("/data").then((e) => {
-        setShow(false);
-        setData(e.data);
-      });
+      getData("/api/product")
+        .then((data) => {
+          setShow(false);
+          setData(data.docs);
+          console.log(data.docs);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // getData("/api/product")
+      //   .then((e) => {
+      //     setShow(false);
+      //     setData(e.data);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
       return () => {};
     }, [])
   );
@@ -44,7 +57,7 @@ export default function News() {
     return;
   };
   const handleUnlike = (value) => {
-    setLike(like.filter((item) => item.id !== value.id));
+    setLike(like.filter((item) => item._id !== value._id));
     return;
   };
 
@@ -68,15 +81,15 @@ export default function News() {
       <ComLoading show={show}>
         {data.map((value, index) => (
           <ComNew
-            id={value?.id}
+            id={value?._id}
             key={index}
             value={value}
-            url={value.image}
-            name={value.perfumeName}
+            url={value.image[0]}
+            name={value.name}
             handleUnlike={handleUnlike}
             handleLike={handleLike}
           >
-            {value.perfumeDescription}
+            {value.description}
           </ComNew>
         ))}
       </ComLoading>

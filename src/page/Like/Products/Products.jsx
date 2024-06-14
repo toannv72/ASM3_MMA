@@ -19,9 +19,9 @@ export default function Products({ deletes, call }) {
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
-      getData("/data").then((e) => {
+      getData("/api/product").then((e) => {
         setShow(false);
-        setData(e.data);
+        setData(e.docs);
       });
       return () => {};
     }, [])
@@ -31,7 +31,7 @@ export default function Products({ deletes, call }) {
     return;
   };
   const handleUnlike = (value) => {
-    setLike(like.filter((item) => item.id !== value.id));
+    setLike(like.filter((item) => item._id !== value._id));
     call();
     return;
   };
@@ -49,15 +49,14 @@ export default function Products({ deletes, call }) {
       <ComLoading show={show}>
         {like.map((value, index) => (
           <ComProduct
-            id={value?.id}
-            key={value?.id}
+            id={value?._id}
+            key={value._id}
             value={value}
-            url={value.image}
-            name={value.perfumeName}
+            url={value.image[0]}
             handleUnlike={handleUnlike}
             handleLike={handleLike}
           >
-            {value.perfumeDescription}
+            {value.description}
           </ComProduct>
         ))}
       </ComLoading>

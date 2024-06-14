@@ -17,10 +17,10 @@ export default function ComNew({
 }) {
   const [check, setCheck] = useState(null);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
-  const hasId = (id, array) => array.some((item) => item.id === id);
+  const hasId = (id, array) => array.some((item) => item._id === id);
   const navigation = useNavigation();
 
-  const S = hasId(value.id, like);
+  const S = hasId(value._id, like);
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
@@ -37,26 +37,10 @@ export default function ComNew({
       currency: "VND",
     });
   };
-  // tiền Đô
-  const formatCurrencyUSD = (number) => {
-    return number?.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-  };
-  const Like = (id) => {
-    setCheck(true);
-    handleLike(id);
-    return;
-  };
-  const Unlike = (id) => {
-    setCheck(false);
-    handleUnlike(id);
-    return;
-  };
+
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Details", { id: value.id })}
+      onPress={() => navigation.navigate("Details", { id: value._id })}
       style={styles?.body}
     >
       <Image
@@ -73,7 +57,9 @@ export default function ComNew({
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
           {/* tên sản phẩm */}
-          <Text style={styles.context}>{name}</Text>
+          <Text style={styles.context} numberOfLines={2}>
+            {name}
+          </Text>
           {/* nội dung sản phẩm */}
           <Text numberOfLines={4} style={styles.children}>
             {children}
@@ -86,22 +72,7 @@ export default function ComNew({
               justifyContent: "space-between",
             }}
           >
-            <Text style={styles.price}>{formatCurrencyUSD(value?.price)}</Text>
-            {check ? (
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => Unlike(value)}
-              >
-                <Image source={editIcon} style={styles.editIcon} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => Like(value)}
-              >
-                <Image source={editIcon1} style={styles.editIcon} />
-              </TouchableOpacity>
-            )}
+            <Text style={styles.price}>{formatCurrency(value?.price)}</Text>
           </View>
         </View>
       </View>

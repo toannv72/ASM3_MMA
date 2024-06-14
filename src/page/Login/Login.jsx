@@ -20,7 +20,7 @@ import { postData } from "../../api/api";
 
 export default function LoginScreen() {
   const [datas, setData] = useStorage("toan", {});
-  const [accessToken, setToken] = useStorage("Token", {});
+  const [accessToken, setToken] = useStorage("@user", {});
   const navigation = useNavigation();
 
   const {
@@ -39,9 +39,9 @@ export default function LoginScreen() {
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
-    defaultValues: {
-      username: "user",
-      password: "user",
+    values: {
+      username: "admin123",
+      password: "admin123",
     },
   });
 
@@ -58,9 +58,10 @@ export default function LoginScreen() {
     Keyboard.dismiss();
     console.log(data);
     // navigation.navigate("Homes", { screen: "Home" });
-    postData("/auth/login", data, {})
+    postData("/api/login", data, {})
       .then((data) => {
-        setToken(data?.accessToken);
+        console.log(data);
+        setToken(data?._doc);
         // Chờ setToken hoàn thành trước khi navigate
         return new Promise((resolve) => {
           setTimeout(() => {
@@ -80,40 +81,6 @@ export default function LoginScreen() {
         }
       });
   };
-  const data = [
-    {
-      value: "",
-      label: "toàn",
-    },
-    {
-      value: "2",
-      label: "toàn1",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-    {
-      value: "3",
-      label: "toàn2",
-    },
-  ];
 
   return (
     <View style={styles.container}>
@@ -165,16 +132,7 @@ export default function LoginScreen() {
             </ComButton>
           </View>
         </FormProvider>
-        <Button
-          title="vn"
-          style={{ margin: 100 }}
-          onPress={() => setLanguage("vn")}
-        />
-        <Button
-          title="en"
-          style={{ margin: 100 }}
-          onPress={() => setLanguage("en")}
-        />
+      
       </View>
     </View>
   );

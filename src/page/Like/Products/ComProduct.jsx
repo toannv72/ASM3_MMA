@@ -10,10 +10,10 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 export default function ComProduct({ url, children, value, name, handleLike, handleUnlike }) {
   const [check, setCheck] = useState(null);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
-  const hasId = (id, array) => array.some((item) => item.id === id);
+  const hasId = (id, array) => array.some((item) => item._id === id);
   const navigation = useNavigation();
 
-  const S = hasId(value.id, like);
+  const S = hasId(value._id, like);
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
@@ -50,7 +50,7 @@ export default function ComProduct({ url, children, value, name, handleLike, han
   return (
     <TouchableOpacity
       style={styles?.body}
-      onPress={() => navigation.navigate("Details", { id: value.id })}
+      onPress={() => navigation.navigate("Details", { id: value._id })}
     >
       <Image
         source={{ uri: url }}
@@ -66,7 +66,9 @@ export default function ComProduct({ url, children, value, name, handleLike, han
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
           {/* tên sản phẩm */}
-          <Text style={styles.context}>{name}</Text>
+          <Text style={styles.context} numberOfLines={2}>
+            {value?.name}
+          </Text>
           {/* nội dung sản phẩm */}
           <Text numberOfLines={4} style={styles.children}>
             {children}
@@ -79,7 +81,7 @@ export default function ComProduct({ url, children, value, name, handleLike, han
               justifyContent: "space-between",
             }}
           >
-            <Text style={styles.price}>{formatCurrencyUSD(value?.price)}</Text>
+            <Text style={styles.price}>{formatCurrency(value?.price)}</Text>
             {check ? (
               <TouchableOpacity
                 style={styles.editButton}
