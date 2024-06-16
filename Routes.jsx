@@ -9,17 +9,12 @@ import Home from "./src/page/Home/Home";
 import RegisterSuccess from "./src/page/Register/RegisterSuccess";
 import Otp from "./src/page/Otp/Otp";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
-import ServicePackages from "./src/page/ServicePackages/ServicePackages";
 import HealthMonitor from "./src/page/HealthMonitor/HealthMonitor";
-import AddingServicePackages from "./src/page/AddingServicePackage/AddingServicePackage";
-import AddingServiceDetail from "./src/page/AddingServiceDetail/AddingServiceDetail";
-import AddingServiceElderRegister from "./src/page/AddingServiceRegister/AddingServiceElderRegister";
-import AddingServiceCalendarRegister from "./src/page/AddingServiceRegister/AddingServiceCalendarRegister";
-import ServicePayment from "./src/page/ServicePayment/ServicePayment";
+
 import ServiceHistory from "./src/page/ServiceHistory/ServiceHistory/ServiceHistory";
 import ServiceHistoryDetail from "./src/page/ServiceHistory/ServiceHistoryDetail/ServiceHistoryDetail";
-import BillHistory from "./src/page/Bills/BillHistory";
-import BillDetail from "./src/page/Bills/BillDetail";
+// import BillHistory from "./src/page/Bills/BillHistory";
+// import BillDetail from "./src/page/Bills/BillDetail";
 import UserProfile from "./src/page/UserProfile/UserProfile";
 import EditProfile from "./src/page/UserProfile/EditProfile/EditProfile";
 import ForgetPassword from "./src/page/ForgetPassword/ForgetPassword";
@@ -30,8 +25,10 @@ import ChangePasswordSuccess from "./src/page/ChangePassword/ChangePasswordSucce
 import Toast from "react-native-toast-message";
 import Like from "./src/page/Like/Like";
 import Payment from "./src/page/Pay/Payment";
-import DetailOrder2 from './src/page/Pay/DetailOrder2';
+import DetailOrder2 from "./src/page/Pay/DetailOrder2";
 import DetailOrder from "./src/page/Pay/DetailOrder";
+import Search from "./src/page/Search/Search";
+import DetailProfile from "./src/page/UserProfile/DetailProfile";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -76,47 +73,25 @@ const Routes = () => {
           name="RegisterSuccess"
           component={RegisterSuccess}
         />
+
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
-          name="Otp"
-          component={Otp}
+          name="Search"
+          component={Search}
         />
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
-          name="Service"
-          component={ServicePackages}
+          name="DetailProfile"
+          component={DetailProfile}
         />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingService"
-          component={AddingServicePackages}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceDetail"
-          component={AddingServiceDetail}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceRegister"
-          component={AddingServiceElderRegister}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceCalendarRegister"
-          component={AddingServiceCalendarRegister}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ServicePayment"
-          component={ServicePayment}
-        />
+
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
           name="ServiceHistory"
           component={ServiceHistory}
         />
 
+        {/*  */}
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
           name="EditProfile"
@@ -152,18 +127,6 @@ const Routes = () => {
     </NavigationContainer>
   );
 };
-const HomeStack = createNativeStackNavigator();
-function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator initialRouteName="Homess">
-      <HomeStack.Screen
-        options={{ headerShown: false }}
-        name="Homess"
-        component={Home}
-      />
-    </HomeStack.Navigator>
-  );
-}
 
 function MyBottomNavigationBar() {
   return (
@@ -212,24 +175,20 @@ function MyBottomNavigationBar() {
       <Tab.Screen
         name="Home"
         options={{ headerShown: false }}
-        component={HomeStackScreen}
-      />
-      <Tab.Screen
-        name="Visitation"
-        options={{ headerShown: false }}
-        component={Like}
+        component={Home}
       />
       <Tab.Screen
         name="HealthCondition"
         options={{ headerShown: false }}
         component={HealthMonitor}
       />
-   
+
       <Tab.Screen
-        name="Notification"
+        name="Visitation"
         options={{ headerShown: false }}
-        component={EditProfile}
+        component={Like}
       />
+
       <Tab.Screen
         name="Account"
         options={{ headerShown: false }}

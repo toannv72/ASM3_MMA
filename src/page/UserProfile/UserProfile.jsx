@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import HeaderUser from "./HeaderUser";
 import MenuList from "./MenuList";
@@ -11,44 +11,104 @@ import feedback from "../../../assets/profile_icons/feedback.png";
 import notification from "../../../assets/profile_icons/notification.png";
 import serviceHistory from "../../../assets/profile_icons/serviceHistory.png";
 import signout from "../../../assets/profile_icons/signout.png";
-export default function UserProfile() {
+import { useNavigation } from "@react-navigation/native";
+import { getData } from "../../api/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { number } from "yup";
+export default function UserProfile({}) {
+  const navigation = useNavigation();
+  const [userData, setUserData] = useState({});
+  const [pending, setpending] = useState({});
+  const [processing, setprocessing] = useState({});
+  const [shipped, setshipped] = useState({});
+  const [Delivered, setDelivered] = useState({});
+  useEffect(() => {
+    // Gọi hàm getStoredUserId khi component được tạo ra
+    getStoredUserId();
+
+    // Thêm listener cho sự kiện 'focus'
+    const unsubscribe = navigation.addListener("focus", () => {
+      // Tải lại dữ liệu khi trang hồ sơ được focus
+      getStoredUserId();
+    });
+
+    // Hủy đăng ký listener khi component unmount
+    return unsubscribe;
+  }, [navigation]);
+
+  const getStoredUserId = async () => {
+    try {
+      const data = await AsyncStorage.getItem("@user");
+      if (data !== null) {
+        const userData = JSON.parse(data);
+        setUserData(userData);
+
+        getData(`/api/order/user/pending/${userData._id}`)
+          .then((data) => {
+            setpending(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        getData(`/api/order/user/processing/${userData._id}`)
+          .then((data) => {
+            setprocessing(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        getData(`/api/order/user/shipped/${userData._id}`)
+          .then((data) => {
+            setshipped(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        getData(`/api/order/user/Delivered/${userData._id}`)
+          .then((data) => {
+            setDelivered(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("No data found in AsyncStorage.");
+      }
+    } catch (error) {
+      console.error("Error loading data:", error);
+    }
+  };
   const data = [
     {
       name: "Hợp đồng",
+      number: pending.length,
       link: "Contracts",
       icon: contract,
+      status: "pending",
     },
     {
       name: "Hóa đơn",
       link: "BillHistory",
+      number: processing.length,
       icon: bill,
+      status: "processing",
     },
     {
       name: "Lịch sử dịch vụ",
+      number: shipped.length,
       link: "ServiceHistory",
       icon: serviceHistory,
-    },
-  ];
-  const data2 = [
-    {
-      name: "Đổi mật khẩu",
-      link: "ChangePassword",
-      icon: changePassword,
+      status: "shipped",
     },
     {
-      name: "Đổi ngôn ngữ",
-      link: "FeedbackHistory",
-      icon: changeLanguage,
-    },
-    // {
-    //   name: "Thông báo",
-    //   link: "notification",
-    //   icon: notification,
-    // },
-    {
-      name: "Đánh giá",
-      link: "FeedbackHistory",
-      icon: feedback,
+      name: "Lịch sử dịch vụ",
+      number: Delivered.length,
+      link: "ServiceHistory",
+      icon: serviceHistory,
+      status: "delivered",
     },
   ];
 
@@ -61,9 +121,9 @@ export default function UserProfile() {
   ];
   return (
     <View style={styles.body}>
-      <HeaderUser />
+      <HeaderUser userData={userData} />
       <MenuList data={data} />
-      <MenuList data={data2} />
+   
       <MenuList data={data3} colorRed={true} />
     </View>
   );

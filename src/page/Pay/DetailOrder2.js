@@ -41,7 +41,7 @@ export default function DetailOrder2({ navigation }) {
             })
             .catch((error) => {
 
-                console.error("Lỗi khi lấy dữ liệu đơn hàng:", error);
+                console.error("Lỗi khi lấy dữ liệu đơn hàng:", error,);
             });
     }, []);
 

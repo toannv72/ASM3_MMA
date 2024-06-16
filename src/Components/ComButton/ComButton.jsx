@@ -16,9 +16,9 @@ export default function ComButton({ children, onPress, check = false, style }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "#057594", // Màu nền mặc định
+    backgroundColor: "#33B39C", // Màu nền mặc định
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 14,
     borderRadius: 5,
     alignItems: "center",
   },

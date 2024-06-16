@@ -23,7 +23,7 @@ export default function ComServiceHistoryPackage({ data }) {
     <TouchableOpacity
       style={styles.body}
       onPress={() => {
-        navigation.navigate("ServiceHistoryDetail", { id: data.id });
+        navigation.navigate("Bill2", { itemData: data._id });
       }}
     >
       <Image
@@ -36,37 +36,28 @@ export default function ComServiceHistoryPackage({ data }) {
         }}
       />
       <View style={styles?.container}>
-        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{data?.text}</Text>
-
+        <Text style={{ fontWeight: "bold", fontSize: 16 }}>{data?.name}</Text>
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>
-            {addingPackages?.history?.dates}
+            Tên người mua
           </Text>
-          <Text>
-            : {data?.registerDates}
-          </Text>
+          <Text>: {data?.name}</Text>
         </Text>
-
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>
-            {addingPackages?.payment?.elderName}
+            Tổng tiền đơn hàng
           </Text>
-          <Text>
-            : {data?.elder}
-          </Text>
+          <Text>: {data?.totalAmount}</Text>
         </Text>
 
         <Text style={{ flexDirection: "row" }}>
           <Text style={{ fontWeight: "bold", fontSize: 14 }}>
             {addingPackages?.history?.status}
           </Text>
-          <Text>
-            : {data?.status}
-          </Text>
+          <Text>: {data?.status}</Text>
         </Text>
-
       </View>
-    </TouchableOpacity >
+    </TouchableOpacity>
   );
 }
 

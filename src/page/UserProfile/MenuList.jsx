@@ -3,21 +3,38 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import bill from "../../../assets/profile_icons/bill.png";
 
-const MenuItem = ({ iconName, text, link, colorRed }) => {
+const MenuItem = ({ iconName, text, link, colorRed, number, status }) => {
   const navigation = useNavigation();
 
   const press = () => {
-    navigation.navigate(link);
+   if (status) {
+     navigation.navigate(link, { itemData: status });
+  } else {
+      navigation.navigate(link); 
+  } 
   };
   return (
     <TouchableOpacity style={styles.menuItem} onPress={() => press()}>
-      <Image source={iconName} style={styles.image} />
-      {colorRed ? (
-        <Text style={{ fontSize: 18, color: "red", fontWeight: "500" }}>
-          {text}
-        </Text>
-      ) : (
-        <Text style={{ fontSize: 18, fontWeight: "500" }}>{text}</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          paddingVertical: 8,
+          paddingHorizontal: 4,
+          gap: 10,
+        }}
+      >
+        <Image source={iconName} style={styles.image} />
+        {colorRed ? (
+          <Text style={{ fontSize: 18, color: "red", fontWeight: "500" }}>
+            {text}
+          </Text>
+        ) : (
+          <Text style={{ fontSize: 18, fontWeight: "500" }}>{text}</Text>
+        )}
+      </View>
+      {colorRed || (
+        <Text style={{ fontSize: 18, fontWeight: "500" }}>{number}</Text>
       )}
     </TouchableOpacity>
   );
@@ -33,6 +50,8 @@ const MenuList = ({ data, colorRed }) => {
           iconName={value.icon}
           text={value.name}
           link={value.link}
+          number={value.number}
+          status={value.status}
         />
       ))}
     </View>
@@ -50,9 +69,7 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 4,
-    gap: 10,
+    justifyContent: "space-between",
   },
   image: {
     width: 30,

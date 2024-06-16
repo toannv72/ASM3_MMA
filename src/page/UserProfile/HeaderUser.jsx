@@ -3,7 +3,7 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import editIcon from "../../../assets/profile_icons/edit.png";
 
-export default function HeaderUser() {
+export default function HeaderUser({ userData }) {
   const navigation = useNavigation();
 
   const edit = () => {
@@ -11,20 +11,21 @@ export default function HeaderUser() {
   };
   const DetailProfile = () => {
     navigation.navigate("DetailProfile");
-    
-  }
+  };
   return (
     <View style={styles.body}>
       <TouchableOpacity style={styles.container} onPress={DetailProfile}>
         <Image
           source={{
-            uri: "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
+            uri:
+              userData?.avatar ||
+              "https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/hinh-thien-nhien-3d-002.jpg",
           }}
           style={styles.avatar}
         />
         <View style={styles.info}>
-          <Text style={styles.name}>Cao Văn B</Text>
-          <Text style={styles.phone}>0909799799</Text>
+          <Text style={styles.name}>{userData?.name}</Text>
+          <Text style={styles.phone}>{userData?.phone}</Text>
         </View>
         <TouchableOpacity style={styles.editButton} onPress={edit}>
           <Image

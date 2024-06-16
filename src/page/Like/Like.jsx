@@ -9,6 +9,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useStorage } from "../../hooks/useLocalStorage";
 import ComButton from "../../Components/ComButton/ComButton";
 import ComHeader from "../../Components/ComHeader/ComHeader";
+import gioHang from "../../../assets/gioHang.png";
 
 export default function Favourite({ navigation }) {
   const [checkedList, setCheckedList] = useState([]);
@@ -40,20 +41,6 @@ export default function Favourite({ navigation }) {
   };
   const onCheckAllPress = () => {
     setCheckedList(checkAll ? [] : storedData.map((data) => data));
-  };
-
-  const loadStoredData = async () => {
-    try {
-      const dataAsyncStorage = await AsyncStorage.getItem("like");
-      if (dataAsyncStorage !== null) {
-        const storedData = JSON.parse(dataAsyncStorage);
-        setStoredData(storedData);
-      } else {
-        setStoredData([]);
-      }
-    } catch (error) {
-      console.error("Error loading data:", error);
-    }
   };
 
   useFocusEffect(
@@ -106,7 +93,6 @@ export default function Favourite({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 30 }}>
-       
         {ShowSelect || (
           <View
             style={{
@@ -199,6 +185,28 @@ export default function Favourite({ navigation }) {
         )}
 
         <ScrollView>
+          {storedData.length == 0 ? (
+            <View>
+              <View>
+                <Image
+                  style={{ width: "100%", height: 400 }}
+                  source={gioHang}
+                />
+                <Text
+                  style={{
+                    color: "#000",
+                    fontSize: 20,
+                    padding: 30,
+                    textAlign: "center",
+                  }}
+                >
+                  Danh sách yêu thích trống!
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <></>
+          )}
           <View
             style={{ flexDirection: "column-reverse", rowGap: 10, padding: 14 }}
           >

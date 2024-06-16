@@ -13,18 +13,15 @@ import ComDatePicker from "../../../Components/ComInput/ComDatePicker";
 import { ScrollView } from "react-native";
 import { firebaseImg } from "../../../api/firebaseImg";
 import ComHeader from "../../../Components/ComHeader/ComHeader";
-import ComTextArea from "../../../Components/ComInput/ComTextArea";
+import { useStorage } from "../../../hooks/useLocalStorage";
 import { postData } from "../../../api/api";
-import ComPopup from "../../../Components/ComPopup/ComPopup";
-import { useModalState } from "../../../hooks/useModalState";
 
 export default function EditProfile() {
   const [date, setDate] = useState(new Date());
+  const [accessToken, setToken] = useStorage("@user", {});
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState("null");
-  const navigation = useNavigation();
-  const modal = useModalState();
 
+  const navigation = useNavigation();
   const {
     text: {
       EditProfile,
@@ -33,76 +30,45 @@ export default function EditProfile() {
     setLanguage,
   } = useContext(LanguageContext);
   const loginSchema = yup.object().shape({
-    perfumeName: yup.string().trim().required(EditProfile?.message?.fullName),
-    gender: yup.string().trim().required(EditProfile?.message?.gender),
-
-    price: yup.string().trim().required("Vui lòng nhập giá tiền"),
-    company: yup.string().trim().required("Vui lòng nhập company"),
-    perfumeDescription: yup.string().trim().required("vui lòng nhập"),
+    name: yup.string().trim().required(EditProfile?.message?.fullName),
+    phone: yup.string().trim().required(EditProfile?.message?.phoneNumber),
+    email: yup
+      .string()
+      .email(EditProfile?.message?.emailInvalid)
+      .trim()
+      .required(EditProfile?.message?.email),
+    address: yup.string().trim().required(EditProfile?.message?.address),
   });
 
   const methods = useForm({
     resolver: yupResolver(loginSchema),
-    defaultValues: {
-      gender: true,
+    values: {
+      email: accessToken?.email,
+      name: accessToken?.name,
+      phone: accessToken?.phone,
+      address: accessToken?.address,
     },
   });
   const {
     control,
     handleSubmit,
     formState: { errors },
-    reset
   } = methods;
-
-  const data = [
-    {
-      value: false,
-      label: "Nam",
-    },
-    {
-      value: true,
-      label: "Nữ",
-    },
-  ];
+  const handleEdit = (data) => {
+    firebaseImg(image).then((imageUrl) => {
+      console.log("Image uploaded successfully:", imageUrl);
+      postData("/api/user", { ...data }).then((e) => {
+        console.log(e);
+      });
+    });
+  };
 
   const setImg = (data) => {
     setImage(data);
   };
-  const handleCreate = (data) => {
-    console.log("====================================");
-    console.log(1232, data);
-    console.log("====================================");
-    firebaseImg(image).then((imageUrl) => {
-      console.log("Image uploaded successfully:", imageUrl);
-      postData("/data", { ...data, image: imageUrl })
-        .then((e) => {
-          console.log(e);
-          modal.handleOpen();
-          reset()
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  };
   return (
     <>
       <ComHeader title={EditProfile?.title} showTitle showBackIcon />
-
-      <ComPopup
-        visible={modal.isModalOpen}
-        title="Tạo thành công"
-        buttons={[
-          // { text: "Hủy", onPress: modal.handleClose, check: true },
-          {
-            text: "Xác nhận",
-            onPress: () => {
-              modal.handleClose();
-            },
-          },
-        ]}
-        onClose={modal.handleClose}
-      ></ComPopup>
       <View style={styles.body}>
         <View style={styles.container}>
           <FormProvider {...methods}>
@@ -111,72 +77,56 @@ export default function EditProfile() {
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
               >
-                <Avatar image={image} setImg={setImg} />
+                <Avatar
+                  image={image}
+                  setImg={setImg}
+                  avatarUser={accessToken.avatar}
+                />
                 <View style={{ gap: 10 }}>
                   <ComInput
                     label={EditProfile?.label?.fullName}
                     placeholder={EditProfile?.placeholder?.fullName}
-                    name="perfumeName"
+                    name="name"
                     control={control}
                     keyboardType="default" // Set keyboardType for First Name input
                     errors={errors} // Pass errors object
                     required
                   />
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      gap: 10,
-                    }}
-                  >
-                    <View style={{ flex: 1 }}>
-                      <ComSelect
-                        label={EditProfile?.label?.gender}
-                        name="gender"
-                        control={control}
-                        // keyboardType="visible-password" // Set keyboardType for Last Name input
-                        errors={errors} // Pass errors object
-                        options={data}
-                        required
-                      />
-                    </View>
-                    <View style={{ flex: 1 }}>
-                      <ComInput
-                        label={"Giá tiền"}
-                        placeholder={"nhập giá tiền"}
-                        name="price"
-                        control={control}
-                        keyboardType="number-pad" // Set keyboardType for First Name input
-                        errors={errors} // Pass errors object
-                        required
-                      />
-                    </View>
-                  </View>
 
                   <ComInput
-                    label={"Công ty"}
-                    placeholder={"company"}
-                    name="company"
+                    label={EditProfile?.label?.phoneNumber}
+                    placeholder={EditProfile?.placeholder?.phoneNumber}
+                    name="phone"
                     control={control}
                     keyboardType="default" // Set keyboardType for First Name input
                     errors={errors} // Pass errors object
                     required
                   />
-
-                  <ComTextArea
-                    label={"chi tiết sản phẩm"}
-                    placeholder={"chi tiết sản phẩm"}
-                    name="perfumeDescription"
+                  <ComInput
+                    label={EditProfile?.label?.email}
+                    placeholder={EditProfile?.placeholder?.email}
+                    name="email"
                     control={control}
-                    errors={errors}
+                    keyboardType="default" // Set keyboardType for First Name input
+                    errors={errors} // Pass errors object
                     required
                   />
-
-                  <ComButton onPress={handleSubmit(handleCreate)}>
-                    Tạo mới
-                  </ComButton>
+                  <ComInput
+                    label={EditProfile?.label?.address}
+                    placeholder={EditProfile?.placeholder?.address}
+                    name="address"
+                    control={control}
+                    errors={errors} // Pass errors object
+                    required
+                  />
                 </View>
-                <View style={{ height: 150 }}></View>
+                <ComButton
+                  onPress={handleSubmit(handleEdit)}
+                  style={{ marginTop: 10 }}
+                >
+                  {EditProfile?.button?.EditProfile}
+                </ComButton>
+                <View style={{ height: 100 }}></View>
               </ScrollView>
             </View>
             <View></View>
