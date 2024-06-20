@@ -32,7 +32,7 @@ export default function News() {
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
-      getData("/data").then((e) => {
+      getData("/lan").then((e) => {
         setShow(false);
         setData(e.data);
       });
@@ -67,17 +67,17 @@ export default function News() {
       </ScrollView>
       <ComLoading show={show}>
         {data.map((value, index) => (
-          <ComNew
-            id={value?.id}
-            key={index}
-            value={value}
-            url={value.image}
-            name={value.perfumeName}
-            handleUnlike={handleUnlike}
-            handleLike={handleLike}
-          >
-            {value.perfumeDescription}
-          </ComNew>
+          <View key={index}>
+            <Text>{value.name}</Text>
+            {value.items.map((items, index) => (
+              <ComNew
+                key={index}
+                value={items}
+                handleUnlike={handleUnlike}
+                handleLike={handleLike}
+              ></ComNew>
+            ))}
+          </View>
         ))}
       </ComLoading>
     </View>

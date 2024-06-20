@@ -7,7 +7,7 @@ import editIcon1 from "../../../../assets/iconLike/Favorite.png";
 import { useStorage } from "../../../hooks/useLocalStorage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
-export default function ComProduct({ url, children, value, name, handleLike, handleUnlike }) {
+export default function ComProduct({ value, handleLike, handleUnlike }) {
   const [check, setCheck] = useState(null);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
   const hasId = (id, array) => array.some((item) => item.id === id);
@@ -50,10 +50,10 @@ export default function ComProduct({ url, children, value, name, handleLike, han
   return (
     <TouchableOpacity
       style={styles?.body}
-      onPress={() => navigation.navigate("Details", { id: value.id })}
+      onPress={() => navigation.navigate("Details", { id: value })}
     >
       <Image
-        source={{ uri: url }}
+        source={{ uri: value.image }}
         style={{
           width: 126,
           height: 133,
@@ -66,10 +66,10 @@ export default function ComProduct({ url, children, value, name, handleLike, han
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
           {/* tên sản phẩm */}
-          <Text style={styles.context}>{name}</Text>
+          <Text style={styles.context}>{value?.name}</Text>
           {/* nội dung sản phẩm */}
           <Text numberOfLines={4} style={styles.children}>
-            {children}
+            {value.origin}
           </Text>
           {/* giá tiền */}
           <View

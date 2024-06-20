@@ -19,15 +19,14 @@ import editIcon1 from "../../../../assets/iconLike/Favorite.png";
 import ComLoading from "../../../Components/ComLoading/ComLoading";
 
 export default function ServiceHistoryDetail() {
-  const [data, setData] = useState({});
-  const [show, setShow] = useState(true);
-  const [check, setCheck] = useState(null);
   const route = useRoute();
   const { id } = route.params;
+  const [data, setData] = useState(id);
+  const [show, setShow] = useState(true);
+  const [check, setCheck] = useState(null);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
   const navigation = useNavigation();
   const hasId = (id, array) => array.some((item) => item.id === id);
-
   const {
     text: { addingPackages },
     setLanguage,
@@ -35,16 +34,22 @@ export default function ServiceHistoryDetail() {
   const handleBackPress = () => {
     navigation.goBack();
   };
-
+  console.log(1111,check);
+  console.log(2222,id.id);
+  console.log(333, like);
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
+      setData(id);
+      setCheck(hasId(data.id, like));
+    
+      setShow(false);
       return () => {};
     }, [])
   );
   useEffect(() => {
-    setCheck(hasId(data.id, like));
-  }, [data]);
+    setCheck(hasId(id.id, like));
+  }, [id]);
 
   const formatCurrency = (number) => {
     return number?.toLocaleString("vi-VN", {
@@ -55,11 +60,11 @@ export default function ServiceHistoryDetail() {
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
-      getData(`/data/${id}`).then((e) => {
-        setShow(false);
+      // getData(`/data/${id}`).then((e) => {
+      //   setShow(false);
 
-        setData(e.data);
-      });
+      //   setData(e.data);
+      // });
       return () => {};
     }, [])
   );

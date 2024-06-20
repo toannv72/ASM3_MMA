@@ -55,31 +55,9 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           component={MyBottomNavigationBar}
         />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="Login"
-          component={Login}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="Register"
-          component={Register}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="RegisterSuccess"
-          component={RegisterSuccess}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="Otp"
-          component={Otp}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="Service"
-          component={ServicePackages}
-        />
+
+   
+
         <Stack.Screen
           options={{ headerLeft: null, headerShown: false }}
           name="AddingService"
@@ -250,21 +228,8 @@ function MyBottomNavigationBar() {
         options={{ headerShown: false }}
         component={LikePageScreen}
       />
-      <Tab.Screen
-        name="HealthCondition"
-        options={{ headerShown: false }}
-        component={HealthMonitor}
-      />
-      <Tab.Screen
-        name="Notification"
-        options={{ headerShown: false }}
-        component={EditProfile}
-      />
-      <Tab.Screen
-        name="Account"
-        options={{ headerShown: false }}
-        component={UserProfile}
-      />
+
+
     </Tab.Navigator>
   );
 }

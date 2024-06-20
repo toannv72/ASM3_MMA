@@ -16,6 +16,7 @@ export default function Products({ deletes, call }) {
     text: { Home },
   } = useContext(LanguageContext);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
+  console.log(like);
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
@@ -48,17 +49,19 @@ export default function Products({ deletes, call }) {
       ></ScrollView>
       <ComLoading show={show}>
         {like.map((value, index) => (
-          <ComProduct
-            id={value?.id}
-            key={value?.id}
-            value={value}
-            url={value.image}
-            name={value.perfumeName}
-            handleUnlike={handleUnlike}
-            handleLike={handleLike}
-          >
-            {value.perfumeDescription}
-          </ComProduct>
+          <View key={value?.id}>
+            <ComProduct
+              id={value?.id}
+             
+              value={value}
+            
+              name={value.perfumeName}
+              handleUnlike={handleUnlike}
+              handleLike={handleLike}
+            >
+              {value.perfumeDescription}
+            </ComProduct>
+          </View>
         ))}
       </ComLoading>
     </View>

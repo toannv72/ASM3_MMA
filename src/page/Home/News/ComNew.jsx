@@ -8,10 +8,7 @@ import { useStorage } from "../../../hooks/useLocalStorage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export default function ComNew({
-  url,
-  children,
   value,
-  name,
   handleLike,
   handleUnlike,
 }) {
@@ -56,11 +53,11 @@ export default function ComNew({
   };
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Details", { id: value.id })}
+      onPress={() => navigation.navigate("Details", { id: value })}
       style={styles?.body}
     >
       <Image
-        source={{ uri: url }}
+        source={{ uri: value.image }}
         style={{
           width: 126,
           height: 133,
@@ -73,10 +70,10 @@ export default function ComNew({
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
           {/* tên sản phẩm */}
-          <Text style={styles.context}>{name}</Text>
+          <Text style={styles.context}>{value?.name}</Text>
           {/* nội dung sản phẩm */}
           <Text numberOfLines={4} style={styles.children}>
-            {children}
+            {value.origin}
           </Text>
           {/* giá tiền */}
           <View
