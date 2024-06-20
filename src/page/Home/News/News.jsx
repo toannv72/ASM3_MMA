@@ -50,25 +50,21 @@ export default function News() {
 
   return (
     <View style={styles?.body}>
-      <TopicContent>{Home?.news}</TopicContent>
+      <TopicContent>Các loài hoa</TopicContent>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         horizontal={true}
-      >
-        <View style={styles?.buttonContainer}>
-          <ComSelectButton onPress={check} check={select}>
-            Vui chơi
-          </ComSelectButton>
-          <ComSelectButton onPress={check1} check={select1}>
-            Sức khỏe
-          </ComSelectButton>
-        </View>
-      </ScrollView>
+      ></ScrollView>
       <ComLoading show={show}>
         {data.map((value, index) => (
           <View key={index}>
-            <Text>{value.name}</Text>
+            {/* <ComSelectButton onPress={check1} check={select1}>
+              {value.name}
+            </ComSelectButton> */}
+            <View style={styles?.buttonContainer}>
+              <ComSelectButton check={select1}>{value.name}</ComSelectButton>
+            </View>
             {value.items.map((items, index) => (
               <ComNew
                 key={index}
@@ -96,7 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 15,
     flexWrap: "wrap",
-    marginLeft: 16,
+    // marginLeft: 16,
     marginBottom: 10,
   },
 });

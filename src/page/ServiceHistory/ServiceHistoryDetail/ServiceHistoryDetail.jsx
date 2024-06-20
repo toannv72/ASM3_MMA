@@ -69,24 +69,29 @@ export default function ServiceHistoryDetail() {
   return (
     <>
       <ComLoading show={show}>
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={handleBackPress}
-            style={styles.backIconContainer}
-          >
-            <Image source={backArrowWhite} style={styles.backIcon} />
-          </TouchableOpacity>
-          <Image
-            source={{ uri: data?.image }}
-            style={{
-              height: 200,
-              objectFit: "fill",
-            }}
-          />
-        </View>
         <ScrollView style={styles.body}>
+          <View style={styles.header}>
+            <TouchableOpacity
+              onPress={handleBackPress}
+              style={styles.backIconContainer}
+            >
+              <Image source={backArrowWhite} style={styles.backIcon} />
+            </TouchableOpacity>
+            <Image
+              source={{ uri: data?.image }}
+              style={{
+                height: 300,
+                objectFit: "fill",
+                width: "100%",
+                borderRadius:30
+              }}
+              resizeMode="cover"
+            />
+          </View>
           <View style={styles.row}>
-            <Text style={{ ...styles.contentBold, flex: 9 }}>{data?.name}</Text>
+            <Text style={{ ...styles.contentBold, flex: 9, fontWeight: "900" }}>
+              {data?.name}
+            </Text>
             <Text style={{ ...styles.text, flex: 1 }}>
               {check ? (
                 <TouchableOpacity
@@ -153,9 +158,9 @@ export default function ServiceHistoryDetail() {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    paddingTop: 20,
+    // paddingTop: 20,
     backgroundColor: "#f9f9f9",
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
   },
   header: {
     paddingTop: 50,
@@ -173,10 +178,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 5,
+    marginTop: 5,
+    marginHorizontal:2,
     padding: 16,
     backgroundColor: "#fff",
-    borderRadius: 10,
+    borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

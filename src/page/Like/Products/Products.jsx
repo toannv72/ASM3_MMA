@@ -10,7 +10,6 @@ import ComLoading from "../../../Components/ComLoading/ComLoading";
 import { useStorage } from "../../../hooks/useLocalStorage";
 
 export default function Products({ deletes, call }) {
-  const [data, setData] = useState([]);
   const [show, setShow] = useState(true);
   const {
     text: { Home },
@@ -20,10 +19,7 @@ export default function Products({ deletes, call }) {
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
-      getData("/data").then((e) => {
         setShow(false);
-        setData(e.data);
-      });
       return () => {};
     }, [])
   );
@@ -48,25 +44,27 @@ export default function Products({ deletes, call }) {
         horizontal={true}
       ></ScrollView>
       <ComLoading show={show}>
-        {like.map((value, index) => (
-          <View key={value?.id}>
-            <ComProduct
-              id={value?.id}
-             
-              value={value}
-            
-              name={value.perfumeName}
-              handleUnlike={handleUnlike}
-              handleLike={handleLike}
-            >
-              {value.perfumeDescription}
-            </ComProduct>
-          </View>
-        ))}
+        {like
+          .slice()
+          .reverse()
+          .map((value, index) => (
+            <View key={value?.id}>
+              <ComProduct
+                id={value?.id}
+                value={value}
+                name={value.perfumeName}
+                handleUnlike={handleUnlike}
+                handleLike={handleLike}
+              >
+                {value.perfumeDescription}
+              </ComProduct>
+            </View>
+          ))}
       </ComLoading>
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   body: {
     paddingHorizontal: 15,

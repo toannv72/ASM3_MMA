@@ -143,8 +143,8 @@ const styles = StyleSheet.create({
   },
   context: {
     color: "#000",
-    fontWeight: "bold",
-    fontSize: 16,
+    fontWeight: "900",
+    fontSize: 18,
   },
   price: {
     color: "#000",
