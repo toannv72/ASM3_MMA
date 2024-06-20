@@ -6,12 +6,9 @@ import editIcon from "../../../../assets/iconLike/Favorite_fill.png";
 import editIcon1 from "../../../../assets/iconLike/Favorite.png";
 import { useStorage } from "../../../hooks/useLocalStorage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import StarRating from "react-native-star-rating-widget";
 
-export default function ComNew({
-  value,
-  handleLike,
-  handleUnlike,
-}) {
+export default function ComNew({ value, handleLike, handleUnlike }) {
   const [check, setCheck] = useState(null);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
   const hasId = (id, array) => array.some((item) => item.id === id);
@@ -70,10 +67,36 @@ export default function ComNew({
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
           {/* tên sản phẩm */}
-          <Text style={styles.context}>{value?.name}</Text>
+          <Text style={styles.context} numberOfLines={2}>
+            {value?.name}
+            {"                                                           "}
+          </Text>
           {/* nội dung sản phẩm */}
-          <Text numberOfLines={4} style={styles.children}>
-            {value.origin}
+          <Text numberOfLines={1} style={styles.children}>
+            Origin: {value.origin}
+          </Text>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              alignContent: "center",
+            }}
+          >
+            <Text numberOfLines={1} style={styles.children}>
+              Rank:
+              <StarRating
+                rating={parseFloat(value?.rating)}
+                onChange={() => {}}
+                starSize={15}
+                starStyle={styles.star}
+                enableSwiping={false}
+                enableHalfStar={true}
+              />
+            </Text>
+          </View>
+
+          <Text numberOfLines={1} style={styles.children}>
+            Color: {value.color}
           </Text>
           {/* giá tiền */}
           <View
