@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
-import TopicContent from "../TopicContent";
 import { LanguageContext } from "../../../contexts/LanguageContext";
 import ComSelectButton from "../../../Components/ComButton/ComSelectButton";
 import ComNew from "./ComNew";
@@ -50,7 +49,6 @@ export default function News() {
 
   return (
     <View style={styles?.body}>
-      <TopicContent>Các loài hoa</TopicContent>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -59,9 +57,6 @@ export default function News() {
       <ComLoading show={show}>
         {data.map((value, index) => (
           <View key={index}>
-            {/* <ComSelectButton onPress={check1} check={select1}>
-              {value.name}
-            </ComSelectButton> */}
             <View style={styles?.buttonContainer}>
               <ComSelectButton check={select1}>{value.name}</ComSelectButton>
             </View>

@@ -9,7 +9,7 @@ export default function Header() {
       <ComAvatar />
       <View style={styles.text}>
         <Text>Xin chào!</Text>
-        <Text style={styles.textName}>Thảo My</Text>
+        <Text style={styles.textName}>Hồng Minh</Text>
       </View>
       <Image
         source={search}

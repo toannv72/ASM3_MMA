@@ -7,13 +7,10 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { LanguageContext } from "../../../contexts/LanguageContext";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import backArrowWhite from "../../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
 import { useStorage } from "../../../hooks/useLocalStorage";
-import { getData } from "./../../../api/api";
-import ComDateConverter from "./../../../Components/ComDateConverter/ComDateConverter";
 import editIcon from "../../../../assets/iconLike/Favorite_fill.png";
 import editIcon1 from "../../../../assets/iconLike/Favorite.png";
 import ComLoading from "../../../Components/ComLoading/ComLoading";

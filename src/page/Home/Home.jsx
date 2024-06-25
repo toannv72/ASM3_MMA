@@ -15,6 +15,7 @@ export default function Home({ navigation }) {
         style={styles?.scrollView}
       >
         <TopPlacesCarousel list={TOP_PLACES} />
+        {/* list sản phẩm */}
         <News />
         <View style={{ height: 120 }}></View>
       </ScrollView>
