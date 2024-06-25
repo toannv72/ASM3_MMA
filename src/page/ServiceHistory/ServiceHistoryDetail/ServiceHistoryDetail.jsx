@@ -28,10 +28,6 @@ export default function ServiceHistoryDetail() {
   const [like, setLike, loadStoredValue] = useStorage("like", []);
   const navigation = useNavigation();
   const hasId = (id, array) => array.some((item) => item.id === id);
-  const {
-    text: { addingPackages },
-    setLanguage,
-  } = useContext(LanguageContext);
   const handleBackPress = () => {
     navigation.goBack();
   };

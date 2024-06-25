@@ -1,49 +1,12 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useCallback } from "react";
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./src/page/Login/Login";
-import Register from "./src/page/Register/Register";
 import Home from "./src/page/Home/Home";
-import RegisterSuccess from "./src/page/Register/RegisterSuccess";
-import Otp from "./src/page/Otp/Otp";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
-import ServicePackages from "./src/page/ServicePackages/ServicePackages";
-import HealthMonitor from "./src/page/HealthMonitor/HealthMonitor";
-import Notification from "./src/page/Notification/Notification";
-import HealthMonitorDetail from "./src/page/HealthMonitorDetail/HealthMonitorDetail";
-import VisitationSchedule from "./src/page/VisitationSchedule/VisitationSchedule";
-import AddingServicePackages from "./src/page/AddingServicePackage/AddingServicePackage";
-import AddingServiceDetail from "./src/page/AddingServiceDetail/AddingServiceDetail";
-import AddingServiceElderRegister from "./src/page/AddingServiceRegister/AddingServiceElderRegister";
-import AddingServiceCalendarRegister from "./src/page/AddingServiceRegister/AddingServiceCalendarRegister";
-import ServicePayment from "./src/page/ServicePayment/ServicePayment";
-import ServiceHistory from "./src/page/ServiceHistory/ServiceHistory/ServiceHistory";
 import ServiceHistoryDetail from "./src/page/ServiceHistory/ServiceHistoryDetail/ServiceHistoryDetail";
-import CancelRenewSuccess from "./src/page/ServiceHistory/ServiceHistoryDetail/CancelRenewSuccess";
-import CreateFeedback from "./src/page/Feedback/CreateFeedback";
-import FeedbackHistory from "./src/page/Feedback/FeedbackHistory";
-import FeedbackDetail from "./src/page/Feedback/FeedbackDetail";
-import BillHistory from "./src/page/Bills/BillHistory";
-import BillDetail from "./src/page/Bills/BillDetail";
-import UserProfile from "./src/page/UserProfile/UserProfile";
-import ElderProfile from "./src/page/ElderProfile/ElderProfile";
-import EditProfile from "./src/page/UserProfile/EditProfile/EditProfile";
-import DetailProfile from "./src/page/UserProfile/DetailProfile";
-import ForgetPassword from "./src/page/ForgetPassword/ForgetPassword";
-import OtpForgetPassword from "./src/page/ForgetPassword/OtpForgetPassword";
-import ResetPassword from "./src/page/ForgetPassword/ResetPassword";
-import ResetPasswordSuccess from "./src/page/ForgetPassword/ResetPasswordSuccess";
-import ChangePassword from "./src/page/ChangePassword/ChangePassword";
-import ChangePasswordSuccess from "./src/page/ChangePassword/ChangePasswordSuccess";
-import RegisterVisitation from "./src/page/RegisterVisitation/RegisterVisitation";
-import RegisterVisitationSuccess from "./src/page/RegisterVisitation/RegisterVisitationSuccess";
-import Contracts from "./src/page/Contract/Contracts";
-import ContractDetail from "./src/page/ContractDetail/ContractDetail";
-import ContractCandSuccess from "./src/page/ContractDetail/ContractCandSuccess";
 import Like from "./src/page/Like/Like";
-
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Routes = () => {
@@ -55,92 +18,18 @@ const Routes = () => {
           options={{ headerLeft: null, headerShown: false }}
           component={MyBottomNavigationBar}
         />
-
-   
-
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingService"
-          component={AddingServicePackages}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceDetail"
-          component={AddingServiceDetail}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceRegister"
-          component={AddingServiceElderRegister}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="AddingServiceCalendarRegister"
-          component={AddingServiceCalendarRegister}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ServicePayment"
-          component={ServicePayment}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ServiceHistory"
-          component={ServiceHistory}
-        />
-
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="EditProfile"
-          component={EditProfile}
-        />
-
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ChangePasswordSuccess"
-          component={ChangePasswordSuccess}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ForgetPassword"
-          component={ForgetPassword}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="OtpForgetPassword"
-          component={OtpForgetPassword}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ResetPassword"
-          component={ResetPassword}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ResetPasswordSuccess"
-          component={ResetPasswordSuccess}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="Contracts"
-          component={Contracts}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ContractDetail"
-          component={ContractDetail}
-        />
-        <Stack.Screen
-          options={{ headerLeft: null, headerShown: false }}
-          name="ContractCandSuccess"
-          component={ContractCandSuccess}
-        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 const HomeStack = createNativeStackNavigator();
-function HomeStackScreen() {
+function HomeStackScreen({ navigation }) {
+  useFocusEffect(
+    useCallback(() => {
+      navigation.navigate("Homess");
+      return () => {};
+    }, [])
+  );
   return (
     <HomeStack.Navigator initialRouteName="Homess">
       <HomeStack.Screen
@@ -158,12 +47,18 @@ function HomeStackScreen() {
 }
 
 const LikePage = createNativeStackNavigator();
-function LikePageScreen() {
+function LikePageScreen({ navigation }) {
+  useFocusEffect(
+    useCallback(() => {
+      navigation.navigate("Like");
+      return () => {};
+    }, [])
+  );
   return (
     <LikePage.Navigator>
       <LikePage.Screen
         options={{ headerShown: false }}
-        name="Homess"
+        name="Like"
         component={Like}
       />
       <LikePage.Screen
@@ -224,12 +119,10 @@ function MyBottomNavigationBar() {
         component={HomeStackScreen}
       />
       <Tab.Screen
-        name="Visitation"
+        name="Account"
         options={{ headerShown: false }}
         component={LikePageScreen}
       />
-
-
     </Tab.Navigator>
   );
 }
