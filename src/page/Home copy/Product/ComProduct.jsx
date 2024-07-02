@@ -8,7 +8,7 @@ import { useStorage } from "../../../hooks/useLocalStorage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import StarRating from "react-native-star-rating-widget";
 
-export default function ComNew({ value, handleLike, handleUnlike }) {
+export default function ComProduct({ value, handleLike, handleUnlike }) {
   const [check, setCheck] = useState(null);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
   const hasId = (id, array) => array.some((item) => item.id === id);

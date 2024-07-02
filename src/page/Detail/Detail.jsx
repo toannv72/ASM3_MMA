@@ -8,15 +8,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import backArrowWhite from "../../../../assets/icon/backArrowWhite.png";
+import backArrowWhite from "../../../assets/icon/backArrowWhite.png";
 import { useNavigation } from "@react-navigation/native";
-import { useStorage } from "../../../hooks/useLocalStorage";
-import editIcon from "../../../../assets/iconLike/Favorite_fill.png";
-import editIcon1 from "../../../../assets/iconLike/Favorite.png";
-import ComLoading from "../../../Components/ComLoading/ComLoading";
+import { useStorage } from "../../hooks/useLocalStorage";
+import editIcon from "../../../assets/iconLike/Favorite_fill.png";
+import editIcon1 from "../../../assets/iconLike/Favorite.png";
+import ComLoading from "../../Components/ComLoading/ComLoading";
 import StarRating from "react-native-star-rating-widget";
 
-export default function ServiceHistoryDetail() {
+export default function Detail() {
   const route = useRoute();
   const { id } = route.params;
   const [data, setData] = useState(id);
@@ -34,7 +34,6 @@ export default function ServiceHistoryDetail() {
       loadStoredValue();
       setData(id);
       setCheck(hasId(data.id, like));
-
       setShow(false);
       return () => {};
     }, [])
@@ -76,7 +75,7 @@ export default function ServiceHistoryDetail() {
                 height: 300,
                 objectFit: "fill",
                 width: "100%",
-                borderRadius:30
+                borderRadius: 30,
               }}
               resizeMode="cover"
             />

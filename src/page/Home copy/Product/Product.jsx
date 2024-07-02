@@ -3,30 +3,19 @@ import { ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import { LanguageContext } from "../../../contexts/LanguageContext";
 import ComSelectButton from "../../../Components/ComButton/ComSelectButton";
-import ComNew from "./ComNew";
-import { getData } from "./../../../api/api";
+import ComProduct from "./ComProduct";
+import { getData } from "../../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
 import ComLoading from "../../../Components/ComLoading/ComLoading";
 import { useStorage } from "../../../hooks/useLocalStorage";
 
-export default function News() {
+export default function Product() {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(true);
   const {
     text: { Home },
   } = useContext(LanguageContext);
   const [like, setLike, loadStoredValue] = useStorage("like", []);
-
-  const [select, setSelect] = useState(true);
-  const [select1, setSelect1] = useState(false);
-  const check = () => {
-    setSelect(true);
-    setSelect1(false);
-  };
-  const check1 = () => {
-    setSelect(false);
-    setSelect1(true);
-  };
 
   useFocusEffect(
     useCallback(() => {
@@ -58,15 +47,15 @@ export default function News() {
         {data.map((value, index) => (
           <View key={index}>
             <View style={styles?.buttonContainer}>
-              <ComSelectButton check={select1}>{value.name}</ComSelectButton>
+              <ComSelectButton check={true}>{value.name}</ComSelectButton>
             </View>
             {value.items.map((items, index) => (
-              <ComNew
+              <ComProduct
                 key={index}
                 value={items}
                 handleUnlike={handleUnlike}
                 handleLike={handleLike}
-              ></ComNew>
+              ></ComProduct>
             ))}
           </View>
         ))}

@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
 import Header from "./Header";
-import News from "./News/News";
+import Product from "./Product/Product";
 import TopPlacesCarousel from "../../Components/ComImg/TopPlacesCarousel";
 import { TOP_PLACES } from "../../../db";
 
-export default function Home({ navigation }) {
+export default function Page3({ navigation }) {
   return (
     <View style={styles.container}>
       <Header />
@@ -16,7 +16,7 @@ export default function Home({ navigation }) {
       >
         <TopPlacesCarousel list={TOP_PLACES} />
         {/* list sản phẩm */}
-        <News />
+        <Product />
         <View style={{ height: 120 }}></View>
       </ScrollView>
     </View>
@@ -24,9 +24,10 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 40,
+    container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      paddingTop: 40,
+  
   },
 });

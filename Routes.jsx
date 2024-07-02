@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/page/Home/Home";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
-import ServiceHistoryDetail from "./src/page/ServiceHistory/ServiceHistoryDetail/ServiceHistoryDetail";
+import Detail from "./src/page/Detail/Detail"
 import Like from "./src/page/Like/Like";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,7 @@ function HomeStackScreen({ navigation }) {
       <HomeStack.Screen
         name="Details"
         options={{ headerShown: false }}
-        component={ServiceHistoryDetail}
+        component={Detail}
       />
     </HomeStack.Navigator>
   );
@@ -64,7 +64,7 @@ function LikePageScreen({ navigation }) {
       <LikePage.Screen
         name="Details"
         options={{ headerShown: false }}
-        component={ServiceHistoryDetail}
+        component={Detail}
       />
     </LikePage.Navigator>
   );
@@ -105,9 +105,6 @@ function MyBottomNavigationBar() {
           } else if (route.name === "Account") {
             iconName = focused ? "Nav5" : "Nav5_1";
           }
-
-          // You can return any component that you like here!
-          // return <Ionicons name={iconName} size={size} color={"back"} />;
           return <ComIcon icon={iconName} />;
         },
       })}
