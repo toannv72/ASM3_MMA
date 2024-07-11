@@ -83,15 +83,15 @@ export default function UserProfile({}) {
   };
   const data = [
     {
-      name: "Hợp đồng",
+      name: "don hang",
       number: pending.length,
-      link: "Contracts",
+      link: "ServiceHistory",
       icon: contract,
       status: "pending",
     },
     {
-      name: "Hóa đơn",
-      link: "BillHistory",
+      name: "dang giao",
+      link: "ServiceHistory",
       number: processing.length,
       icon: bill,
       status: "processing",

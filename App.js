@@ -7,10 +7,8 @@ import { Styles } from "./src/styles/Styles.jsx";
 const App = () => {
   return (
     <LanguageProvider>
-      {/* <Styles> */}
-  
         <Routes />
-      {/* </Styles> */}
+
     </LanguageProvider>
 
   );

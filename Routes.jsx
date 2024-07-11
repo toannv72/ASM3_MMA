@@ -22,7 +22,6 @@ import OtpForgetPassword from "./src/page/ForgetPassword/OtpForgetPassword";
 import ResetPassword from "./src/page/ForgetPassword/ResetPassword";
 import ResetPasswordSuccess from "./src/page/ForgetPassword/ResetPasswordSuccess";
 import ChangePasswordSuccess from "./src/page/ChangePassword/ChangePasswordSuccess";
-import Toast from "react-native-toast-message";
 import Like from "./src/page/Like/Like";
 import Payment from "./src/page/Pay/Payment";
 import DetailOrder2 from "./src/page/Pay/DetailOrder2";
@@ -35,7 +34,7 @@ const Tab = createBottomTabNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Toast />
+
       <Stack.Navigator initialRouteName="Homes">
         <Stack.Screen
           name="Homes"
