@@ -8,6 +8,7 @@ import { getData } from "../../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
 import ComLoading from "../../../Components/ComLoading/ComLoading";
 import { useStorage } from "../../../hooks/useLocalStorage";
+// import ComProduct from "../../Home/Product/ComProduct";
 
 export default function Products({ deletes, call }) {
   const [show, setShow] = useState(true);

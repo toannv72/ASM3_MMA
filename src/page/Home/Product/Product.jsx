@@ -44,20 +44,13 @@ export default function Product() {
         horizontal={true}
       ></ScrollView>
       <ComLoading show={show}>
-        {data.map((value, index) => (
-          <View key={index}>
-            <View style={styles?.buttonContainer}>
-              <ComSelectButton check={true}>{value.name}</ComSelectButton>
-            </View>
-            {value.items.map((items, index) => (
-              <ComProduct
-                key={index}
-                value={items}
-                handleUnlike={handleUnlike}
-                handleLike={handleLike}
-              ></ComProduct>
-            ))}
-          </View>
+        {data.map((items, index) => (
+          <ComProduct
+            key={index}
+            value={items}
+            handleUnlike={handleUnlike}
+            handleLike={handleLike}
+          ></ComProduct>
         ))}
       </ComLoading>
     </View>

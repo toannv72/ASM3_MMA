@@ -5,8 +5,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./src/page/Home/Home";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
-import Detail from "./src/page/Detail/Detail"
+import Detail from "./src/page/Detail/Detail";
 import Like from "./src/page/Like/Like";
+import Page3 from "./src/page/Home copy/Page3";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const Routes = () => {
@@ -69,6 +70,30 @@ function LikePageScreen({ navigation }) {
     </LikePage.Navigator>
   );
 }
+
+const page3Navigator = createNativeStackNavigator();
+function Page3Screen({ navigation }) {
+  useFocusEffect(
+    useCallback(() => {
+      navigation.navigate("page3");
+      return () => {};
+    }, [])
+  );
+  return (
+    <page3Navigator.Navigator>
+      <page3Navigator.Screen
+        options={{ headerShown: false }}
+        name="page3"
+        component={Page3}
+      />
+      <page3Navigator.Screen
+        name="Details"
+        options={{ headerShown: false }}
+        component={Detail}
+      />
+    </page3Navigator.Navigator>
+  );
+}
 function MyBottomNavigationBar() {
   return (
     <Tab.Navigator
@@ -114,6 +139,11 @@ function MyBottomNavigationBar() {
         name="Home"
         options={{ headerShown: false }}
         component={HomeStackScreen}
+      />
+      <Tab.Screen
+        name="Visitation"
+        options={{ headerShown: false }}
+        component={Page3Screen}
       />
       <Tab.Screen
         name="Account"

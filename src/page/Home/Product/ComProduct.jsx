@@ -98,6 +98,9 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
           <Text numberOfLines={1} style={styles.children}>
             Color: {value.color}
           </Text>
+          <Text numberOfLines={1} style={{color:"red"}}>
+          {value.isTopOfTheWeek ? "TopOfTheWeek" : ""}
+          </Text>
           {/* giá tiền */}
           <View
             style={{

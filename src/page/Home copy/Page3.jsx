@@ -5,22 +5,21 @@ import Product from "./Product/Product";
 import TopPlacesCarousel from "../../Components/ComImg/TopPlacesCarousel";
 import { TOP_PLACES } from "../../../db";
 
-export default function Home({ navigation }) {
-    return (
-      <View style={styles.container}>
-        <Header />
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          style={styles?.scrollView}
-        >
-          <TopPlacesCarousel list={TOP_PLACES} />
-          {/* list sản phẩm */}
-          <Product />
-          <View style={{ height: 120 }}></View>
-        </ScrollView>
-      </View>
-  
+export default function Page3({ navigation }) {
+  return (
+    <View style={styles.container}>
+      {/* <Header /> */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+        style={styles?.scrollView}
+      >
+        {/* <TopPlacesCarousel list={TOP_PLACES} /> */}
+        {/* list sản phẩm */}
+        <Product />
+        <View style={{ height: 120 }}></View>
+      </ScrollView>
+    </View>
   );
 }
 

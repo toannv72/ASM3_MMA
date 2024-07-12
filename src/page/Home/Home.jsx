@@ -5,7 +5,7 @@ import Product from "./Product/Product";
 import TopPlacesCarousel from "../../Components/ComImg/TopPlacesCarousel";
 import { TOP_PLACES } from "../../../db";
 
-export default function Page3({ navigation }) {
+export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Header />
@@ -14,7 +14,7 @@ export default function Page3({ navigation }) {
         showsHorizontalScrollIndicator={false}
         style={styles?.scrollView}
       >
-        <TopPlacesCarousel list={TOP_PLACES} />
+        {/* <TopPlacesCarousel list={TOP_PLACES} /> */}
         {/* list sản phẩm */}
         <Product />
         <View style={{ height: 120 }}></View>
