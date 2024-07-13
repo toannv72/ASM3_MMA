@@ -50,11 +50,13 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
   };
   return (
     <TouchableOpacity
+      // đường dẫn chuyển đến Details và chuyền value qua 
       onPress={() => navigation.navigate("Details", { id: value })}
       style={styles?.body}
     >
       <Image
-        source={{ uri: value.image }}
+        //  thay đổi đường dẫn ảnh theo hợp lý
+        source={{ uri: value?.image }}
         style={{
           width: 126,
           height: 133,
@@ -66,7 +68,7 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
       />
       <View style={styles.container}>
         <View style={{ flex: 1 }}>
-          {/* tên sản phẩm */}
+          {/*thay đổi tên sản phẩm */}
           <Text style={styles.context} numberOfLines={2}>
             {value?.name}
             {"                                                           "}
@@ -75,6 +77,7 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
           <Text numberOfLines={1} style={styles.children}>
             Origin: {value.origin}
           </Text>
+          {/* Rating  */}
           <View
             style={{
               alignItems: "center",
@@ -88,20 +91,21 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
                 rating={parseFloat(value?.rating)}
                 onChange={() => {}}
                 starSize={15}
+                maxStars={5}
                 starStyle={styles.star}
                 enableSwiping={false}
                 enableHalfStar={true}
               />
             </Text>
           </View>
-
           <Text numberOfLines={1} style={styles.children}>
             Color: {value.color}
           </Text>
-          <Text numberOfLines={1} style={{color:"red"}}>
-          {value.isTopOfTheWeek ? "TopOfTheWeek" : ""}
+          {/* phần nối bật   */}
+          <Text numberOfLines={1} style={{ color: "red" }}>
+            {value.isTopOfTheWeek ? "TopOfTheWeek" : ""}
           </Text>
-          {/* giá tiền */}
+
           <View
             style={{
               flexDirection: "row",
@@ -109,7 +113,10 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
               justifyContent: "space-between",
             }}
           >
+            {/* giá tiền  thay đổi formatCurrency nếu là tiền việt*/}
             <Text style={styles.price}>{formatCurrencyUSD(value?.price)}</Text>
+
+            {/* giữ nguyên không thay đổi gì  */}
             {check ? (
               <TouchableOpacity
                 style={styles.editButton}

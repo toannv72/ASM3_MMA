@@ -7,9 +7,12 @@ import Home from "./src/page/Home/Home";
 import ComIcon from "./src/Components/ComIcon/ComIcon";
 import Detail from "./src/page/Detail/Detail";
 import Like from "./src/page/Like/Like";
-import Page3 from "./src/page/Home copy/Page3";
+import Page3 from "./src/page/Page3/Page3";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+
+
+// giữ nguyên không được thay đổi
 const Routes = () => {
   return (
     <NavigationContainer>
@@ -23,6 +26,8 @@ const Routes = () => {
     </NavigationContainer>
   );
 };
+
+
 const HomeStack = createNativeStackNavigator();
 function HomeStackScreen({ navigation }) {
   useFocusEffect(
@@ -33,11 +38,13 @@ function HomeStackScreen({ navigation }) {
   );
   return (
     <HomeStack.Navigator initialRouteName="Homess">
+      {/* trang chủ  */}
       <HomeStack.Screen
         options={{ headerShown: false }}
         name="Homess"
         component={Home}
       />
+      {/* chi tiết  */}
       <HomeStack.Screen
         name="Details"
         options={{ headerShown: false }}
@@ -140,6 +147,7 @@ function MyBottomNavigationBar() {
         options={{ headerShown: false }}
         component={HomeStackScreen}
       />
+
       <Tab.Screen
         name="Visitation"
         options={{ headerShown: false }}

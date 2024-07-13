@@ -18,6 +18,7 @@ import StarRating from "react-native-star-rating-widget";
 
 export default function Detail() {
   const route = useRoute();
+  // data được truyền  
   const { id } = route.params;
   const [data, setData] = useState(id);
   const [show, setShow] = useState(true);
@@ -26,13 +27,17 @@ export default function Detail() {
   const navigation = useNavigation();
   const hasId = (id, array) => array.some((item) => item.id === id);
   const handleBackPress = () => {
+    // nút quay lại 
     navigation.goBack();
   };
 
   useFocusEffect(
     useCallback(() => {
+      // tải lại dữ liệu những sản phẩm đã like 
       loadStoredValue();
+
       setData(id);
+      // kiểm tra xem sản phẩm đã được like hay chưa 
       setCheck(hasId(data.id, like));
       setShow(false);
       return () => {};
@@ -70,6 +75,7 @@ export default function Detail() {
               <Image source={backArrowWhite} style={styles.backIcon} />
             </TouchableOpacity>
             <Image
+              //  thay đổi đường dẫn ảnh theo hợp lý data?.image =>data?.????
               source={{ uri: data?.image }}
               style={{
                 height: 300,
@@ -82,6 +88,7 @@ export default function Detail() {
           </View>
           <View style={styles.row}>
             <Text style={{ ...styles.contentBold, flex: 9, fontWeight: "900" }}>
+              {/*thay đổi tên sản phẩm */}
               {data?.name}
             </Text>
             <Text style={{ ...styles.text, flex: 1 }}>
@@ -102,41 +109,48 @@ export default function Detail() {
               )}
             </Text>
           </View>
-
+          {/*thay đổi tiền sản phẩm */}
           <View style={styles.row}>
             <Text style={styles.contentBold}>Price</Text>
             <Text style={styles.text}> {formatCurrencyUSD(data?.price)}</Text>
           </View>
+          {/* thay đổi rank sp */}
           <View style={styles.row}>
             <Text style={styles.contentBold}>Rating</Text>
             <StarRating
               rating={parseFloat(data?.rating)}
               onChange={() => {}}
               starSize={20}
+              maxStars={5}
               starStyle={styles.star}
               enableSwiping={false}
               enableHalfStar={true}
             />
           </View>
           <View style={styles.row}>
+            {/* thay đổi */}
             <Text style={styles.contentBold}>Weight</Text>
             <Text style={styles.text}> {data?.weight}g</Text>
           </View>
           <View style={styles.row}>
+            {/* thay đổi */}
             <Text style={styles.contentBold}>Top Of The Week</Text>
             <Text style={styles.text}>
               {data?.isTopOfTheWeek ? "Yes" : "No"}
             </Text>
           </View>
           <View style={styles.row}>
+            {/* thay đổi */}
             <Text style={styles.contentBold}>Origin</Text>
             <Text style={styles.text}> {data?.origin}</Text>
           </View>
           <View style={styles.row}>
+            {/* thay đổi */}
             <Text style={styles.contentBold}>Bonus</Text>
             <Text style={styles.text}> {data?.bonus}</Text>
           </View>
           <View style={styles.row}>
+            {/* thay đổi */}
             <Text style={styles.contentBold}>Color</Text>
             <Text style={styles.text}> {data?.color}</Text>
           </View>

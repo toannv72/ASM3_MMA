@@ -5,9 +5,9 @@ import { getData } from "../../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
 import ComLoading from "../../../Components/ComLoading/ComLoading";
 import { useStorage } from "../../../hooks/useLocalStorage";
-import ComProduct from "./../../Home/Product/ComProduct";
+import ComProduct from "../../Home/Product/ComProduct";
 
-export default function Product() {
+export default function Product3() {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(true);
   const [sortOrder, setSortOrder, loadSortOrder] = useStorage("sort", "0"); // Trạng thái để lưu thứ tự sắp xếp
@@ -18,6 +18,7 @@ export default function Product() {
     const sortedData = [...data]?.sort((a, b) => {
       console.log(111111111, sortOrder);
       if (sortOrder === "1") {
+        // thay đổi theo đề bài 
         return a.price - b.price;
       }
       if (sortOrder === "2") {
@@ -85,12 +86,21 @@ export default function Product() {
       <Button title={`Sắp xếp  ${sortOrder}`} onPress={() => handleSort()} />
       <ComLoading show={false}>
         {data.map((items, index) => (
-         items.isTopOfTheWeek ? <ComProduct
-            key={items.id}
-            value={items}
-            handleUnlike={handleUnlike}
-            handleLike={handleLike}
-          ></ComProduct>:""
+          // sửa lại theo đề bài muốn hiển thị ra cái gì
+           items.isTopOfTheWeek ? <ComProduct
+              key={items.id}
+              value={items}
+              handleUnlike={handleUnlike}
+              handleLike={handleLike}
+            ></ComProduct> : ""
+
+          // trong trường hợp không có nói chỉ hiện 1 thứ gì đó mà là hiện cả thì
+          // <ComProduct
+          //   key={items.id }
+          //   value={items}
+          //   handleUnlike={handleUnlike}
+          //   handleLike={handleLike}
+          // ></ComProduct>
         ))}
       </ComLoading>
     </View>

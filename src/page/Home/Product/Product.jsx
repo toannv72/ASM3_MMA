@@ -1,8 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
-import { LanguageContext } from "../../../contexts/LanguageContext";
-import ComSelectButton from "../../../Components/ComButton/ComSelectButton";
 import ComProduct from "./ComProduct";
 import { getData } from "../../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
@@ -12,25 +10,27 @@ import { useStorage } from "../../../hooks/useLocalStorage";
 export default function Product() {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(true);
-  const {
-    text: { Home },
-  } = useContext(LanguageContext);
+
   const [like, setLike, loadStoredValue] = useStorage("like", []);
 
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
+      // thay đường dẫy api tương ứng nếu mà đổi data thẳng thif ko cần đổi
       getData("/lan").then((e) => {
+        // để nguyên ko thay đổi
         setShow(false);
         setData(e.data);
       });
       return () => {};
     }, [])
   );
+  // để nguyên ko thay đổi
   const handleLike = (value) => {
     setLike([...like, value]);
     return;
   };
+  // để nguyên ko thay đổi
   const handleUnlike = (value) => {
     setLike(like.filter((item) => item.id !== value.id));
     return;
@@ -44,6 +44,7 @@ export default function Product() {
         horizontal={true}
       ></ScrollView>
       <ComLoading show={show}>
+        {/* để nguyên không sửa  */}
         {data.map((items, index) => (
           <ComProduct
             key={index}
