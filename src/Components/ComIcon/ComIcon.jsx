@@ -62,7 +62,7 @@ export default function ComIcon({ icon }) {
     <View>
       <Image
         source={navBar}
-        style={{ width: 80, height: 60, objectFit: "fill" }}
+        style={{ width: 40, height: 40, objectFit: "fill" }}
       />
     </View>
   );
