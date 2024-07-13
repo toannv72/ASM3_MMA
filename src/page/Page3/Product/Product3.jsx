@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -6,8 +6,8 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { View } from "react-native";
 import { getData } from "../../../api/api";
 import { useFocusEffect } from "@react-navigation/native";
 import ComLoading from "../../../Components/ComLoading/ComLoading";
@@ -17,24 +17,22 @@ import sort1 from "../../../../assets/iconSort/Sort1.png";
 import sort2 from "../../../../assets/iconSort/Sort2.png";
 import sort3 from "../../../../assets/iconSort/Sort3.png";
 
+import { Picker } from "@react-native-picker/picker";
 export default function Product3() {
   const [data, setData] = useState([]);
   const [dataOld, setdataOld] = useState([]);
-  const [sortOrder, setSortOrder, loadSortOrder] = useStorage("sort", "0"); // Trạng thái để lưu thứ tự sắp xếp
+  const [sortOrder, setSortOrder, loadSortOrder] = useStorage("sort", "0");
   const [like, setLike, loadStoredValue] = useStorage("like", []);
+  const [selectedColor, setSelectedColor] = useState(""); // State for selected color
 
-  console.log(22222222, sortOrder);
   const changeData = () => {
     const sortedData = [...data]?.sort((a, b) => {
-      console.log(111111111, sortOrder);
       if (sortOrder === "1") {
-        // thay đổi theo đề bài
         return a.price - b.price;
       }
       if (sortOrder === "2") {
         return b.price - a.price;
       }
-      
     });
     if (sortOrder === "0") {
       return setData(dataOld);
@@ -66,35 +64,43 @@ export default function Product3() {
       return setSortOrder("1");
     }
   };
+
   useFocusEffect(
     useCallback(() => {
-      // setData([]);
       loadStoredValue();
-      // getData("/lan").then((e) => {
-      //   setData(e?.data);
-      //   setTimeout(() => {
-      //     changeData();
-      //   }, 100);
-      // });
       return () => {};
-    }, [])
+    }, [loadStoredValue])
   );
+
   useEffect(() => {
     getData("/lan").then((e) => {
       setData(e?.data);
       setdataOld(e?.data);
-      setSortOrder("0")
+      setSortOrder("0");
     });
   }, []);
-const handleIcon = () => {
-  if (sortOrder === "1") {
-    return sort2;
-  }
-  if (sortOrder === "2") {
-    return sort3;
-  }
-  return sort1;
-};
+
+  const handleIcon = () => {
+    if (sortOrder === "1") {
+      return sort2;
+    }
+    if (sortOrder === "2") {
+      return sort3;
+    }
+    return sort1;
+  };
+
+  const filterByColor = (color) => {
+    if (color === "") {
+      return data;
+    }
+    return data.filter((item) => item.color === color);
+  };
+
+  useEffect(() => {
+    setData(filterByColor(selectedColor));
+  }, [selectedColor]);
+
   return (
     <View style={styles?.body}>
       <ScrollView
@@ -102,10 +108,12 @@ const handleIcon = () => {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
       ></ScrollView>
-      {/* <Button title={`Sắp xếp  ${sortOrder}`} onPress={() => handleSort()} /> */}
-
       <TouchableOpacity
-        style={{ alignItems: "center" ,flexDirection:'row',justifyContent:"flex-end"}}
+        style={{
+          alignItems: "center",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}
         onPress={() => handleSort()}
       >
         <Text>Sắp xếp</Text>
@@ -121,28 +129,39 @@ const handleIcon = () => {
         />
       </TouchableOpacity>
 
-      <ComLoading show={false}>
-        {data.map(
-          (items, index) =>
-            // sửa lại theo đề bài muốn hiển thị ra cái gì
-            items.isTopOfTheWeek ? (
-              <ComProduct
-                key={items.id}
-                value={items}
-                handleUnlike={handleUnlike}
-                handleLike={handleLike}
-              ></ComProduct>
-            ) : (
-              ""
-            )
+      <View
+        style={[
+          styles.input,
+         
+        ]}
+      >
+        <Picker
+          selectedValue={selectedColor}
+          pickerStyleType={{
+            height: 50,
+            width: 150,
+            borderWidth: 0.5,
+            borderColor: "#000",
+          }}
+          onValueChange={(itemValue) => setSelectedColor(itemValue)}
+        >
+          <Picker.Item label="All" value="" />
+          <Picker.Item label="Tan" value="tan" />
+          <Picker.Item label="Plum" value="plum" />
+          {/* Add more colors as needed */}
+        </Picker>
+      </View>
 
-          // trong trường hợp không có nói chỉ hiện 1 thứ gì đó mà là hiện cả thì
-          // <ComProduct
-          //   key={items.id }
-          //   value={items}
-          //   handleUnlike={handleUnlike}
-          //   handleLike={handleLike}
-          // ></ComProduct>
+      <ComLoading show={false}>
+        {data.map((items) =>
+          items.isTopOfTheWeek ? (
+            <ComProduct
+              key={items.id}
+              value={items}
+              handleUnlike={handleUnlike}
+              handleLike={handleLike}
+            />
+          ) : null
         )}
       </ComLoading>
     </View>
@@ -153,6 +172,20 @@ const styles = StyleSheet.create({
   body: {
     paddingHorizontal: 15,
   },
+  input: {
+    backgroundColor: "#fff",
+    height: 50,
+    // padding: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#33B39C",
+    justifyContent: "center",
+    elevation: 5, // Bóng đổ cho Android
+    shadowColor: "#000", // Màu của bóng đổ cho iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
   comCatalogue: {
     flexDirection: "row",
     gap: 30,
@@ -162,7 +195,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 15,
     flexWrap: "wrap",
-    // marginLeft: 16,
     marginBottom: 10,
   },
 });
