@@ -130,11 +130,7 @@ function MyBottomNavigationBar() {
             iconName = focused ? "Nav1" : "Nav1_1";
           } else if (route.name === "Visitation") {
             iconName = focused ? "Nav2" : "Nav2_1";
-          } else if (route.name === "HealthCondition") {
-            iconName = focused ? "Nav3" : "Nav3_1";
-          } else if (route.name === "Notification") {
-            iconName = focused ? "Nav4" : "Nav4_1";
-          } else if (route.name === "Account") {
+          } else  if (route.name === "Account") {
             iconName = focused ? "Nav5" : "Nav5_1";
           }
           return <ComIcon icon={iconName} />;

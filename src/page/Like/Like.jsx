@@ -2,12 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   Image,
 } from "react-native";
-
+import gioHang from "../../../assets/gioHang.png";
 import ComHeader from "../../Components/ComHeader/ComHeader";
 import Products from "./Products/Products";
 import DeleteFilled from "../../../assets/iconLike/DeleteFilled.png";
@@ -75,7 +74,15 @@ export default function Like() {
           </ScrollView>
         ) : (
           <>
-            <Text>hiện tại chưa có san pham nào</Text>
+            <Image
+              source={gioHang}
+              style={{
+                width: 400,
+                height: 300,
+                marginVertical:50,
+                objectFit: "fill",
+              }}
+            />
           </>
         )}
       </View>

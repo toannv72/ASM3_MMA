@@ -9,17 +9,13 @@ import { useStorage } from "../../../hooks/useLocalStorage";
 
 export default function Product() {
   const [data, setData] = useState([]);
-  const [show, setShow] = useState(true);
-
   const [like, setLike, loadStoredValue] = useStorage("like", []);
-
   useFocusEffect(
     useCallback(() => {
       loadStoredValue();
       // thay đường dẫy api tương ứng nếu mà đổi data thẳng thif ko cần đổi
       getData("/lan").then((e) => {
         // để nguyên ko thay đổi
-        setShow(false);
         setData(e.data);
       });
       return () => {};
@@ -43,17 +39,16 @@ export default function Product() {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
       ></ScrollView>
-      <ComLoading show={show}>
-        {/* để nguyên không sửa  */}
-        {data.map((items, index) => (
-          <ComProduct
-            key={index}
-            value={items}
-            handleUnlike={handleUnlike}
-            handleLike={handleLike}
-          ></ComProduct>
-        ))}
-      </ComLoading>
+
+      {/* để nguyên không sửa  */}
+      {data?.map((items, index) => (
+        <ComProduct
+          key={items.id}
+          value={items}
+          handleUnlike={handleUnlike}
+          handleLike={handleLike}
+        ></ComProduct>
+      ))}
     </View>
   );
 }

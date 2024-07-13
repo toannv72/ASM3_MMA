@@ -21,18 +21,15 @@ export default function ComIcon({ icon }) {
       case "Nav2":
         setNavBar(Nav2_1);
         break;
- 
       case "Nav5":
         setNavBar(Nav5_1);
         break;
-
       case "Nav1_1":
         setNavBar(Nav1);
         break;
       case "Nav2_1":
         setNavBar(Nav2);
         break;
-
       case "Nav5_1":
         setNavBar(Nav5);
         break;
