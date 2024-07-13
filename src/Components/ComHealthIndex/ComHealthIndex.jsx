@@ -1,14 +1,10 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Image, View } from "react-native";
-import { LanguageContext } from "../../contexts/LanguageContext";
 import { useNavigation } from "@react-navigation/native";
 
 export default function ComHealthIndex({ data }) {
-  const {
-    text: { HealthMonitorDetail },
-    setLanguage,
-  } = useContext(LanguageContext);
+
   const navigation = useNavigation();
 
   return (

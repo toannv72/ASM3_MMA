@@ -1,12 +1,9 @@
 import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { View } from "react-native";
-import { LanguageContext } from "../../contexts/LanguageContext";
 
 export default function ComSelectButton({ children, onPress, check }) {
-  const {
-    text: { Home },
-  } = useContext(LanguageContext);
+
   return (
     <View>
       {check ? (
