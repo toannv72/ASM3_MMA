@@ -89,7 +89,7 @@ export default function Detail() {
           <View style={styles.row}>
             <Text style={{ ...styles.contentBold, flex: 9, fontWeight: "900" }}>
               {/*thay đổi tên sản phẩm */}
-              {data?.name}
+              {data?.playerName}
             </Text>
             <Text style={{ ...styles.text, flex: 1 }}>
               {check ? (
@@ -111,11 +111,11 @@ export default function Detail() {
           </View>
           {/*thay đổi tiền sản phẩm */}
           <View style={styles.row}>
-            <Text style={styles.contentBold}>Price</Text>
-            <Text style={styles.text}> {formatCurrencyUSD(data?.price)}</Text>
+            <Text style={styles.contentBold}>Yob</Text>
+            <Text style={styles.text}>{2024-data?.YoB} years old</Text>
           </View>
           {/* thay đổi rank sp */}
-          <View style={styles.row}>
+          {/* <View style={styles.row}>
             <Text style={styles.contentBold}>Rating</Text>
             <StarRating
               rating={parseFloat(data?.rating)}
@@ -126,34 +126,28 @@ export default function Detail() {
               enableSwiping={false}
               enableHalfStar={true}
             />
+          </View> */}
+          <View style={styles.row}>
+            {/* thay đổi */}
+            <Text style={styles.contentBold}>Minutes Played</Text>
+            <Text style={styles.text}> {data?.MinutesPlayed}</Text>
           </View>
           <View style={styles.row}>
             {/* thay đổi */}
-            <Text style={styles.contentBold}>Weight</Text>
-            <Text style={styles.text}> {data?.weight}g</Text>
+            <Text style={styles.contentBold}>Captain</Text>
+            <Text style={styles.text}>{data?.isCaptain ? "Yes" : "No"}</Text>
           </View>
           <View style={styles.row}>
             {/* thay đổi */}
-            <Text style={styles.contentBold}>Top Of The Week</Text>
-            <Text style={styles.text}>
-              {data?.isTopOfTheWeek ? "Yes" : "No"}
-            </Text>
+            <Text style={styles.contentBold}>team</Text>
+            <Text style={styles.text}> {data?.team}</Text>
           </View>
           <View style={styles.row}>
             {/* thay đổi */}
-            <Text style={styles.contentBold}>Origin</Text>
-            <Text style={styles.text}> {data?.origin}</Text>
+            <Text style={styles.contentBold}>Passing Accuracy</Text>
+            <Text style={styles.text}> {data?.PassingAccuracy * 100}%</Text>
           </View>
-          <View style={styles.row}>
-            {/* thay đổi */}
-            <Text style={styles.contentBold}>Bonus</Text>
-            <Text style={styles.text}> {data?.bonus}</Text>
-          </View>
-          <View style={styles.row}>
-            {/* thay đổi */}
-            <Text style={styles.contentBold}>Color</Text>
-            <Text style={styles.text}> {data?.color}</Text>
-          </View>
+
           <View style={{ height: 120 }}></View>
         </ScrollView>
       </ComLoading>

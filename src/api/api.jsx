@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const api = axios.create({
-  baseURL: "https://6661a66863e6a0189feaed91.mockapi.io/api",
+  baseURL: "https://65efa561ead08fa78a50b2ce.mockapi.io/api",
 });
 
 api.interceptors.request.use(

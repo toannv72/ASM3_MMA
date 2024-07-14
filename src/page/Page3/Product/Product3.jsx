@@ -26,18 +26,21 @@ export default function Product3() {
   const [selectedColor, setSelectedColor] = useState(""); // State for selected color
 
   const changeData = () => {
+
     const sortedData = [...data]?.sort((a, b) => {
       if (sortOrder === "1") {
-        return a.price - b.price;
+           
+        return a.MinutesPlayed - b.MinutesPlayed;
       }
       if (sortOrder === "2") {
-        return b.price - a.price;
+        return b.MinutesPlayed - a.MinutesPlayed;
       }
     });
     if (sortOrder === "0") {
       return setData(dataOld);
     }
     setData(sortedData);
+     console.log(sortedData);
   };
 
   useEffect(() => {
@@ -74,8 +77,8 @@ export default function Product3() {
 
   useEffect(() => {
     getData("/lan").then((e) => {
-      setData(e?.data);
-      setdataOld(e?.data);
+      setData(e?.data.reverse());
+      setdataOld(e?.data.reverse());
       setSortOrder("0");
     });
   }, []);
@@ -94,7 +97,7 @@ export default function Product3() {
     if (color === "") {
       return data;
     }
-    return data.filter((item) => item.color === color);
+    return data.filter((item) => item.minutesPlayed === color);
   };
 
   useEffect(() => {
@@ -129,32 +132,10 @@ export default function Product3() {
         />
       </TouchableOpacity>
 
-      <View
-        style={[
-          styles.input,
-         
-        ]}
-      >
-        <Picker
-          selectedValue={selectedColor}
-          pickerStyleType={{
-            height: 50,
-            width: 150,
-            borderWidth: 0.5,
-            borderColor: "#000",
-          }}
-          onValueChange={(itemValue) => setSelectedColor(itemValue)}
-        >
-          <Picker.Item label="All" value="" />
-          <Picker.Item label="Tan" value="tan" />
-          <Picker.Item label="Plum" value="plum" />
-          {/* Add more colors as needed */}
-        </Picker>
-      </View>
 
       <ComLoading show={false}>
         {data.map((items) =>
-          items.isTopOfTheWeek ? (
+          items.isCaptain && 2024 - items.YoB > 34 ? (
             <ComProduct
               key={items.id}
               value={items}

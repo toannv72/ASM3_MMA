@@ -87,14 +87,14 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
         <View style={{ flex: 1 }}>
           {/* tên sản phẩm */}
           <Text style={styles.context} numberOfLines={2}>
-            {value?.name}
+            {value?.playerName}
             {"                                                           "}
           </Text>
           {/* nội dung sản phẩm */}
           <Text numberOfLines={1} style={styles.children}>
-            Origin: {value.origin}
+            Minutes Played: {value.MinutesPlayed}
           </Text>
-          <View
+          {/* <View
             style={{
               alignItems: "center",
               flexDirection: "row",
@@ -112,12 +112,17 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
                 enableHalfStar={true}
               />
             </Text>
-          </View>
-
+          </View> */}
           <Text numberOfLines={1} style={styles.children}>
-            Color: {value.color}
+            Yob: {2024 - value.YoB} years old
+          </Text>
+          <Text numberOfLines={1} style={styles.children}>
+            Team: {value.team}
           </Text>
           {/* giá tiền */}
+          <Text numberOfLines={1} style={{ color: "red" }}>
+            {value.isCaptain ? "Captain" : ""}
+          </Text>
           <View
             style={{
               flexDirection: "row",
@@ -125,7 +130,9 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
               justifyContent: "space-between",
             }}
           >
-            <Text style={styles.price}>{formatCurrencyUSD(value?.price)}</Text>
+            <Text numberOfLines={1} style={styles.children}>
+              Passing Accuracy: {value.PassingAccuracy * 100}%
+            </Text>
             {check ? (
               <TouchableOpacity
                 style={styles.editButton}

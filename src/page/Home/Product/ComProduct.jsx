@@ -50,7 +50,7 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
   };
   return (
     <TouchableOpacity
-      // đường dẫn chuyển đến Details và chuyền value qua 
+      // đường dẫn chuyển đến Details và chuyền value qua
       onPress={() => navigation.navigate("Details", { id: value })}
       style={styles?.body}
     >
@@ -70,15 +70,19 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
         <View style={{ flex: 1 }}>
           {/*thay đổi tên sản phẩm */}
           <Text style={styles.context} numberOfLines={2}>
-            {value?.name}
+            {value?.playerName}
             {"                                                           "}
           </Text>
           {/* nội dung sản phẩm */}
           <Text numberOfLines={1} style={styles.children}>
-            Origin: {value.origin}
+            Minutes Played: {value.MinutesPlayed}
           </Text>
+          <Text numberOfLines={1} style={styles.children}>
+            Yob: {2024 - value.YoB} years old
+          </Text>
+
           {/* Rating  */}
-          <View
+          {/* <View
             style={{
               alignItems: "center",
               flexDirection: "row",
@@ -97,13 +101,13 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
                 enableHalfStar={true}
               />
             </Text>
-          </View>
+          </View> */}
           <Text numberOfLines={1} style={styles.children}>
-            Color: {value.color}
+            Team: {value.team}
           </Text>
           {/* phần nối bật   */}
           <Text numberOfLines={1} style={{ color: "red" }}>
-            {value.isTopOfTheWeek ? "TopOfTheWeek" : ""}
+            {value.isCaptain ? "Captain" : ""}
           </Text>
 
           <View
@@ -114,7 +118,9 @@ export default function ComProduct({ value, handleLike, handleUnlike }) {
             }}
           >
             {/* giá tiền  thay đổi formatCurrency nếu là tiền việt*/}
-            <Text style={styles.price}>{formatCurrencyUSD(value?.price)}</Text>
+            <Text numberOfLines={1} style={styles.children}>
+              Passing Accuracy: {value.PassingAccuracy*100}%
+            </Text>
 
             {/* giữ nguyên không thay đổi gì  */}
             {check ? (

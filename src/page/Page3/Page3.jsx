@@ -9,7 +9,7 @@ import ComHeader from "../../Components/ComHeader/ComHeader";
 export default function Page3({ navigation }) {
   return (
     <>
-      <ComHeader title={"trang 3"} showTitle />
+      <ComHeader title={"Captains screen"} showTitle />
       <View style={styles.container}>
         {/* <Header /> */}
         <ScrollView
